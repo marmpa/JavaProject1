@@ -3,6 +3,6 @@ public class Double_Room extends Single_Room
 {
     public Double_Room(int rPrice)
     {
-        super()
+        super();
     }
 }
