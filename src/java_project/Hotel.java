@@ -22,8 +22,8 @@ public class Hotel
             this.hRating=hRating;
         }
         else
-        {//αλλιώς το θέτω με 0
-            this.hRating=0;
+        {//αλλιώς το θέτω με 2 (το χαμηλότερο πιθανό)
+            this.hRating=2;
         }
     }
 }
