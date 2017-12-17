@@ -1,6 +1,8 @@
 package java_project;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.TreeMap;
 
 public class Reserve {
@@ -11,12 +13,15 @@ public class Reserve {
     private int finish_date;
     //private object rented;
     
-    ArrayList<Reserve> reserveList=new ArrayList<Reserve>();
-    TreeMap<Date, Reservation> 
-        
-    public Reserve() {}
+    List<TreeMap<Date,Reservation>> reserveList;
     
-    public Add()
+        
+    public Reserve() 
+    {
+         reserceList
+    }
+    
+    public Add(Date start_date,Date finish_date,Room )
     {
         
     }
