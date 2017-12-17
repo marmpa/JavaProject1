@@ -1,25 +1,24 @@
 package java_project;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class Reserve {
 
     private String reserve_ID;
     private String reserve_Name;
-    private int Start_date;
-    private int Finish_date;
+    private int start_date;
+    private int finish_date;
     //private object rented;
     
     ArrayList<Reserve> reserveList=new ArrayList<Reserve>();
+    TreeMap<Date, Reservation> 
         
     public Reserve() {}
-
-
-    public Reserve(String reserve_ID, String reserve_Name, int Start_date, int Finish_date) {
-        this.reserve_ID = reserve_ID;
-        this.reserve_Name = reserve_Name;
-        this.Start_date = Start_date;
-        this.Finish_date = Finish_date;
+    
+    public Add()
+    {
+        
     }
     
     public String getID()

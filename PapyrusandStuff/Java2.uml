@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Y_y6EOGlEeelb7Wriqd5bA" name="Java2">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_ZOmLEOGlEeelb7Wriqd5bA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_rNkxwOGoEeelb7Wriqd5bA" name="Room"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_tLDLEOGoEeelb7Wriqd5bA" name="Single_Room">
+    <generalization xmi:type="uml:Generalization" xmi:id="_Z4_SQOGtEeelb7Wriqd5bA" general="_rNkxwOGoEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_vlqzYOGoEeelb7Wriqd5bA" name="Double_Room">
+    <generalization xmi:type="uml:Generalization" xmi:id="_aZvO4OGtEeelb7Wriqd5bA" general="_tLDLEOGoEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_yvLiAOGoEeelb7Wriqd5bA" name="Triple Room">
+    <generalization xmi:type="uml:Generalization" xmi:id="_bFuyMOGtEeelb7Wriqd5bA" general="_tLDLEOGoEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_081FUOGoEeelb7Wriqd5bA" name="Vehicle"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_9SWl0OGoEeelb7Wriqd5bA" name="Luxury_Room">
+    <generalization xmi:type="uml:Generalization" xmi:id="_b5DskOGtEeelb7Wriqd5bA" general="_vlqzYOGoEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_HS0lMOGpEeelb7Wriqd5bA" name="Dual_Vehicle">
+    <generalization xmi:type="uml:Generalization" xmi:id="_m7ffQOGtEeelb7Wriqd5bA" general="_081FUOGoEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Ic_5UOGpEeelb7Wriqd5bA" name="Quad_Vehicle">
+    <generalization xmi:type="uml:Generalization" xmi:id="_kLQMQOGtEeelb7Wriqd5bA" general="_081FUOGoEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_TBoVsOGpEeelb7Wriqd5bA" name="MotorBike">
+    <generalization xmi:type="uml:Generalization" xmi:id="_hQJGAOGtEeelb7Wriqd5bA" general="_HS0lMOGpEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_VBswAOGpEeelb7Wriqd5bA" name="Buggy">
+    <generalization xmi:type="uml:Generalization" xmi:id="_h-TzkOGtEeelb7Wriqd5bA" general="_Ic_5UOGpEeelb7Wriqd5bA"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_WHnPMOGpEeelb7Wriqd5bA" name="Car">
+    <generalization xmi:type="uml:Generalization" xmi:id="_ilKYMOGtEeelb7Wriqd5bA" general="_Ic_5UOGpEeelb7Wriqd5bA"/>
+  </packagedElement>
+</uml:Model>
