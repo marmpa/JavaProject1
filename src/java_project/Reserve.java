@@ -2,6 +2,8 @@ package java_project;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -13,17 +15,22 @@ public class Reserve {
     private int finish_date;
     //private object rented;
     
-    List<TreeMap<Date,Reservation>> reserveList;
+    HashMap<Room,TreeMap<Date,Reservation>> reserveList;
     
         
     public Reserve() 
     {
-         reserceList
+        reserveList = new HashMap<Room,TreeMap<Date,Reservation>>();
     }
     
-    public Add(Date start_date,Date finish_date,Room )
+    public void Add(Date start_date,Date finish_date,Room room)
     {
+        if(reserveList.get(room) == null)
+        {//Τσεκάρει αν υπάρχει το δομάτιο στο ξενοδοχείο
+            
+        }
         
+     
     }
     
     public String getID()

@@ -17,6 +17,11 @@ public class Reservation
     
     public Reservation(String reservation_ID,String reservation_Name,Date start_date,Date finish_date)
     {
+        //Αρχικοποιώ τις μεταβλητές με βάση της τιμές που δώθηκαν
+        this.reservation_ID=reservation_ID;
+        this.start_date=start_date;
+        this.finish_date=finish_date;
+        this.reservation_Name=reservation_Name;
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");//Θέτω το πώς θα φορματάρω την ημερομηνία για εκτύπωση
     }
     
