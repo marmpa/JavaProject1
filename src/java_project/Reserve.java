@@ -1,6 +1,7 @@
 package java_project;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,22 +16,51 @@ public class Reserve {
     private int finish_date;
     //private object rented;
     
-    HashMap<Room,TreeMap<Date,Reservation>> reserveList;
+    HashMap<Room,TreeMap<Integer,Reservation>> reserveList;
     
         
     public Reserve() 
     {
-        reserveList = new HashMap<Room,TreeMap<Date,Reservation>>();
+        reserveList = new HashMap<Room,TreeMap<Integer,Reservation>>();
     }
     
-    public void Add(Date start_date,Date finish_date,Room room)
+    public void Add(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Room room)
     {
-        if(reserveList.get(room) == null)
-        {//Τσεκάρει αν υπάρχει το δομάτιο στο ξενοδοχείο
-            
-        }
+        Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date);//Φτιάχνει μια νέα κράτηση
         
-     
+        //ΠΡΟΣΟΧΗΗΗ ΝΑ ΚΑΝΩ ΕΛΕΝΧΩ ΓΙΑ ΔΙΠΛΩΤΥΠΑ
+        
+        if(reserveList.get(room) == null)
+        {//Τσεκάρει αν υπάρχει το δωμάτιο στο ξενοδοχείο
+            reserveList.put(room, new TreeMap<Integer,Reservation>());
+        }
+        reserveList.get(room).put(DateHashCode(start_date, finish_date), tempReservation);
+        
+    }
+    
+    public int DateHashCode(Date start_date,Date finish_date)
+    {
+        int day,month,year,convertionInput1,convertionInput2,hashCode;
+        
+        
+        Calendar tempCal = Calendar.getInstance();
+        tempCal.setTime(start_date);
+        
+        day = tempCal.get(Calendar.DAY_OF_MONTH);
+        month = tempCal.get(Calendar.MONTH);
+        year = tempCal.get(Calendar.YEAR);
+        
+        convertionInput1 = day + (month-1)*30 + (year-2017)*365;
+        
+        tempCal.setTime(finish_date);
+        day = tempCal.get(Calendar.DAY_OF_MONTH);
+        month = tempCal.get(Calendar.MONTH);
+        year = tempCal.get(Calendar.YEAR);
+        
+        convertionInput2 = day + (month-1)*30 + (year-2017)*365;
+        
+        hashCode = convertionInput1*1000+convertionInput2;
+        return hashCode;
     }
     
     public String getID()
