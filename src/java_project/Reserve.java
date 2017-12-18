@@ -1,5 +1,6 @@
 package java_project;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,36 +21,40 @@ public class Reserve {
     protected SimpleDateFormat dateFormat;
     //private object rented;
     
-    HashMap<Room,TreeMap<Date,Reservation>> hotelReserveList;
-    HashMap<Car,TreeMap<Date,Reservation>> carReserveList;
+    List reserveList;
     
         
     public Reserve() 
     {
-        hotelReserveList = new HashMap<Room,TreeMap<Date,Reservation>>();
-        carReserveList = new HashMap<Room,TreeMap<Date,Reservation>>();
+        reserveList = new ArrayList();
+        
+        reserveList.add(new HashMap<Room,TreeMap<Date,Reservation>>());
+        reserveList.add(new HashMap<Car,TreeMap<Date,Reservation>>());
         
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");
     }
     
-    public void Add(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Room room)
+    public void Add(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
     {
         Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date);//Φτιάχνει μια νέα κράτηση
         
         //ΠΡΟΣΟΧΗΗΗ ΝΑ ΚΑΝΩ ΕΛΕΝΧΩ ΓΙΑ ΔΙΠΛΩΤΥΠΑ
         
-        if(hotelReserveList.get(room) == null)
-        {//Τσεκάρει αν υπάρχει το δωμάτιο στο ξενοδοχείο
-            hotelReserveList.put(room, new TreeMap<Date,Reservation>());
+        for(Object objectType:reserveList)
+        {
+            if(objectType.getClass().equals(room_car_type))
+            {//Αντιστοιχο το αντικείμενο που δώθηκε με την αντίστοιχη κλάση
+                if(objectType.get(room_car_type) == null)
+                {//Τσεκάρει αν υπάρχει το δωμάτιο στο ξενοδοχείο
+                   objectType.put(room_car_type, new TreeMap<Date,Reservation>());
+                }
+                
+                 if(RoomAvailable(start_date, finish_date,room))
+                 {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
+                     hotelReserveList.get(room).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
+                 }
+            }
         }
-        
-        if(RoomAvailable(start_date, finish_date,room))
-        {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
-            hotelReserveList.get(room).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
-        }
-        
-        
-        
         
     }
     
