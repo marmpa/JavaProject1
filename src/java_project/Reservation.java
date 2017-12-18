@@ -25,6 +25,20 @@ public class Reservation
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");//Θέτω το πώς θα φορματάρω την ημερομηνία για εκτύπωση
     }
     
+    public boolean Contains(Date date)
+    {
+        return !(date.after(start_date)||date.before(finish_date));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
+    }
+    
+     public String getID()
+    {
+        return this.reservation_ID;
+    }
+    public String getName()
+    {
+        return this.reservation_Name;
+    }
+    
     @Override
     public int hashCode()
     {//Επιστρέφει το μοναδικό νούμερο που αντιστοιχεί στην κράτηση των συγκεκριμένων ημερών
@@ -35,5 +49,10 @@ public class Reservation
                 + " " 
                 + this.reservation_ID;
         return Objects.hashCode(tempHash);//Επιστρέφω μία μοναδική τιμη ώστε να μην ξαναυπάρχει
+    }
+    @Override
+    public String toString()
+    {
+        return dateFormat.format(start_date);
     }
 }
