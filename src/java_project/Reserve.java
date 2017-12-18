@@ -21,7 +21,7 @@ public class Reserve {
     //private object rented;
     
     HashMap<Room,TreeMap<Date,Reservation>> hotelReserveList;
-    HashMap<Room,TreeMap<Date,Reservation>> carReserveList;
+    HashMap<Car,TreeMap<Date,Reservation>> carReserveList;
     
         
     public Reserve() 
@@ -123,47 +123,5 @@ public class Reserve {
         return this.reserve_Name;
     }
 
-    public Reserve Search_code(String reserve_ID) {
-        Reserve temp_reserve = new Reserve();
-        for (Reservation i : hotelReserveList) {
-            int position=hotelReserveList.indexOf(i);
-            if (reserve_ID.equalsIgnoreCase(hotelReserveList.get(position).getID())) {
-                temp_reserve = hotelReserveList.get(position);
-                break;
-            }
-        }
-        return temp_reserve;
-    }
-
-    public Reserve Search_name(String reserve_Name) {
-        Reserve temp_reserve = new Reserve();
-        for (Reserve i : hotelReserveList) {
-            int position=hotelReserveList.indexOf(i);
-            if (reserve_Name.equalsIgnoreCase(hotelReserveList.get(position).getName())) {
-                temp_reserve = hotelReserveList.get(position);
-                break;
-            }
-        }
-        return temp_reserve;
-    }
-/* --ΗΜΙΤΕΛΗΣ ΑΚΟΜΑ--
-    public void Search_date(int Start,int Finish) {
-        for (Reserve i : reserveList) {
-            int position=reserveList.indexOf(i);
-            if (reserve_ID.equalsIgnoreCase(reserveList.get(position).getName())) {
-                reserveList.remove(position);
-                break;
-            }
-        }
-    }
-*/
-    public void Delete_reserve(String reserve_ID) {
-        for (Reserve i : hotelReserveList) {
-            int position=hotelReserveList.indexOf(i);
-            if (reserve_ID.equalsIgnoreCase(hotelReserveList.get(position).getID())) {
-                hotelReserveList.remove(position);
-                break;
-            }
-        }
-    }
+    
 }
