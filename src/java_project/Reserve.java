@@ -20,12 +20,14 @@ public class Reserve {
     protected SimpleDateFormat dateFormat;
     //private object rented;
     
-    HashMap<Room,TreeMap<Date,Reservation>> reserveList;
+    HashMap<Room,TreeMap<Date,Reservation>> hotelReserveList;
+    HashMap<Room,TreeMap<Date,Reservation>> carReserveList;
     
         
     public Reserve() 
     {
-        reserveList = new HashMap<Room,TreeMap<Date,Reservation>>();
+        hotelReserveList = new HashMap<Room,TreeMap<Date,Reservation>>();
+        carReserveList = new HashMap<Room,TreeMap<Date,Reservation>>();
         
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");
     }
@@ -36,21 +38,22 @@ public class Reserve {
         
         //ΠΡΟΣΟΧΗΗΗ ΝΑ ΚΑΝΩ ΕΛΕΝΧΩ ΓΙΑ ΔΙΠΛΩΤΥΠΑ
         
-        if(reserveList.get(room) == null)
+        if(hotelReserveList.get(room) == null)
         {//Τσεκάρει αν υπάρχει το δωμάτιο στο ξενοδοχείο
-            reserveList.put(room, new TreeMap<Date,Reservation>());
+            hotelReserveList.put(room, new TreeMap<Date,Reservation>());
         }
         
         if(RoomAvailable(start_date, finish_date,room))
         {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
-            reserveList.get(room).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
+            hotelReserveList.get(room).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
         }
+        
         
         
         
     }
     
-    //ΠΡΟΣΟΧΗΗΗΗ ! -- Προς το παρόν δεν Χρειάζεται το παρακάτω
+    //ΠΡΟΣΟΧΗΗΗΗ ! -- Προς το παρόν δεν Χρειάζεται το παρακάτω!!!!!!!!!!!!!!!!!!!!!
 //    public int DateHashCode(Date start_date,Date finish_date)
 //    {
 //        int day,month,year,convertionInput1,convertionInput2,hashCode;
@@ -91,8 +94,8 @@ public class Reserve {
         
         do
         {
-            Map.Entry<Date, Reservation> entry = reserveList.get(room).floorEntry(tempDate);//Παίρνω την πιο κοντινή μικρότερη ημερομηνία
-            //και την βάζω σε ένα Entry ώστε να μπορέσω να αντλήσω πληροφορίες απο αυτή
+            Map.Entry<Date, Reservation> entry = hotelReserveList.get(room).floorEntry(tempDate);//Παίρνω την πιο κοντινή μικρότερη κράτηση με
+            //βάση την ημερομηνία και την βάζω σε ένα Entry ώστε να μπορέσω να αντλήσω πληροφορίες απο αυτή
             if(entry!=null)
             {//Εάν δεν βρήκε τπτ το floorEntry σημαίνει πως δεν υπάρχει κράτηση πριν την συγκεκριμένη μέρα
                 Reservation tempReservation = entry.getValue();//παίρνουμε την κράτηση και την αποθηκεύουμαι σε μία μεταβλητή
@@ -122,10 +125,10 @@ public class Reserve {
 
     public Reserve Search_code(String reserve_ID) {
         Reserve temp_reserve = new Reserve();
-        for (Reserve i : reserveList) {
-            int position=reserveList.indexOf(i);
-            if (reserve_ID.equalsIgnoreCase(reserveList.get(position).getID())) {
-                temp_reserve = reserveList.get(position);
+        for (Reservation i : hotelReserveList) {
+            int position=hotelReserveList.indexOf(i);
+            if (reserve_ID.equalsIgnoreCase(hotelReserveList.get(position).getID())) {
+                temp_reserve = hotelReserveList.get(position);
                 break;
             }
         }
@@ -134,10 +137,10 @@ public class Reserve {
 
     public Reserve Search_name(String reserve_Name) {
         Reserve temp_reserve = new Reserve();
-        for (Reserve i : reserveList) {
-            int position=reserveList.indexOf(i);
-            if (reserve_Name.equalsIgnoreCase(reserveList.get(position).getName())) {
-                temp_reserve = reserveList.get(position);
+        for (Reserve i : hotelReserveList) {
+            int position=hotelReserveList.indexOf(i);
+            if (reserve_Name.equalsIgnoreCase(hotelReserveList.get(position).getName())) {
+                temp_reserve = hotelReserveList.get(position);
                 break;
             }
         }
@@ -155,10 +158,10 @@ public class Reserve {
     }
 */
     public void Delete_reserve(String reserve_ID) {
-        for (Reserve i : reserveList) {
-            int position=reserveList.indexOf(i);
-            if (reserve_ID.equalsIgnoreCase(reserveList.get(position).getID())) {
-                reserveList.remove(position);
+        for (Reserve i : hotelReserveList) {
+            int position=hotelReserveList.indexOf(i);
+            if (reserve_ID.equalsIgnoreCase(hotelReserveList.get(position).getID())) {
+                hotelReserveList.remove(position);
                 break;
             }
         }

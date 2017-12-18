@@ -31,11 +31,11 @@ public class Reservation
     }
     
      public String getID()
-    {
+    {//Επιστρέφει το ID της κράτησης
         return this.reservation_ID;
     }
     public String getName()
-    {
+    {//Επιστρέφει το όνομα της κράτησης
         return this.reservation_Name;
     }
     
