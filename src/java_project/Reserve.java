@@ -13,15 +13,11 @@ import java.util.TreeMap;
 
 public class Reserve {
 
-    private String reserve_ID;
-    private String reserve_Name;
-    private int start_date;
-    private int finish_date;
     
     protected SimpleDateFormat dateFormat;
-    //private object rented;
     
-    List reserveList;
+    
+    public List reserveList;
     
         
     public Reserve() 
@@ -36,22 +32,27 @@ public class Reserve {
     
     public void Add(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
     {
-        Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date);//Φτιάχνει μια νέα κράτηση
+        Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date,room_car_type);//Φτιάχνει μια νέα κράτηση
         
         //ΠΡΟΣΟΧΗΗΗ ΝΑ ΚΑΝΩ ΕΛΕΝΧΩ ΓΙΑ ΔΙΠΛΩΤΥΠΑ
         
         for(Object objectType:reserveList)
         {
-            if(objectType.getClass().equals(room_car_type))
+            if(objectType.getClass().equals(room_car_type.getClass()))
             {//Αντιστοιχο το αντικείμενο που δώθηκε με την αντίστοιχη κλάση
-                if(objectType.get(room_car_type) == null)
+                
+                HashMap tempHashMap = (HashMap) objectType;
+                
+                if(tempHashMap.get(room_car_type) == null)
                 {//Τσεκάρει αν υπάρχει το δωμάτιο στο ξενοδοχείο
-                   objectType.put(room_car_type, new TreeMap<Date,Reservation>());
+                   tempHashMap.put(room_car_type, new TreeMap<Date,Reservation>());
                 }
                 
-                 if(RoomAvailable(start_date, finish_date,room))
+                 if(Available(start_date, finish_date,room_car_type))
                  {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
-                     hotelReserveList.get(room).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
+                     System.out.println("Douleuei seira 57 to room available i car available");
+                     ((TreeMap) tempHashMap.get(room_car_type)).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
+                     //αφού την κάνει cast σε TreeMap
                  }
             }
         }
@@ -85,7 +86,7 @@ public class Reserve {
 //    }
     //ΠΡΟΣΟΧΗΗΗΗ ! -- Προς το παρόν δεν Χρειάζεται το απο επάνω!!!!!!!!!!!!!!
     
-    public boolean RoomAvailable(Date start_date,Date finish_date,Room room)
+    public boolean Available(Date start_date,Date finish_date,Object room_car_type)
     {
         int day,month,year;
         
@@ -95,38 +96,37 @@ public class Reserve {
         tempCal.setTime(start_date);//Θέτη την ημέρομηνια του calendar  σε αυτή του start_date
         tempDate=tempCal.getTime();//Μετατρέπει το calendar σε date 
         
-        
-        
-        do
+        for(Object objectType:reserveList)
         {
-            Map.Entry<Date, Reservation> entry = hotelReserveList.get(room).floorEntry(tempDate);//Παίρνω την πιο κοντινή μικρότερη κράτηση με
-            //βάση την ημερομηνία και την βάζω σε ένα Entry ώστε να μπορέσω να αντλήσω πληροφορίες απο αυτή
-            if(entry!=null)
-            {//Εάν δεν βρήκε τπτ το floorEntry σημαίνει πως δεν υπάρχει κράτηση πριν την συγκεκριμένη μέρα
-                Reservation tempReservation = entry.getValue();//παίρνουμε την κράτηση και την αποθηκεύουμαι σε μία μεταβλητή
+            if(objectType.getClass().equals(room_car_type.getClass()))
+            {//Αντιστοιχο το αντικείμενο που δώθηκε με την αντίστοιχη κλάση
                 
-                if(tempReservation.Contains(tempDate))
-                {//Εάν η κράτηση περιέχει την ημερομηνία που δώσαμε επιστρέφουμαι false
-                    return false;
+                HashMap tempHashMap = (HashMap) objectType;//Μετατρέπει το objectType σε HashMap για να μπορώ να χρεισημοποιείσω συναρτήσεις του
+                
+                do
+                {//Ωσο η ημερομηνία που ψάχνουμε είναι μικροτερη του finish_date
+                    Map.Entry<Date, Reservation> entry = ((TreeMap) tempHashMap.get(room_car_type)).floorEntry(tempDate);//Παίρνω την πιο κοντινή μικρότερη κράτηση με
+                    //βάση την ημερομηνία και την βάζω σε ένα Entry ώστε να μπορέσω να αντλήσω πληροφορίες απο αυτή
+                    if(entry!=null)
+                    {//Εάν δεν βρήκε τπτ το floorEntry σημαίνει πως δεν υπάρχει κράτηση πριν την συγκεκριμένη μέρα
+                        Reservation tempReservation = entry.getValue();//παίρνουμε την κράτηση και την αποθηκεύουμαι σε μία μεταβλητή
+
+                        if(tempReservation.Contains(tempDate))
+                        {//Εάν η κράτηση περιέχει την ημερομηνία που δώσαμε επιστρέφουμαι false
+                            return false;
+                        }
+                    }
+                    tempCal.add(Calendar.DATE,1);//Προσθέτει 1 ημερολογιακή μέρα στην είδη υπάρχοντα μέρα
+                    tempDate=tempCal.getTime();//Μετατρέπει το calendar σε date 
                 }
+                while(tempDate.compareTo(finish_date)<=0);//Ώσο η tempDate είναι μικρότερη η ίση με την finish_date
             }
-            tempCal.add(Calendar.DATE,1);//Προσθέτει 1 ημερολογιακή μέρα στην είδη υπάρχοντα μέρα
-            tempDate=tempCal.getTime();//Μετατρέπει το calendar σε date 
         }
-        while(tempDate.compareTo(finish_date)<=0);//Ώσο η tempDate είναι μικρότερη η ίση με την finish_date
-        
         
         return true;//Επιστρέφει αληθές αν ποτέ μέσα στο Loop δεν βρείκε εμπλεκόμενη ημερομηνία
     }
     
-    public String getID()
-    {
-        return this.reserve_ID;
-    }
-    public String getName()
-    {
-        return this.reserve_Name;
-    }
+    
 
     
 }

@@ -12,16 +12,28 @@ public class Reservation
     protected Date start_date;
     protected Date finish_date;
     protected String reservation_Name;
+    protected Object rented;
+    
     
     protected SimpleDateFormat dateFormat;
     
-    public Reservation(String reservation_ID,String reservation_Name,Date start_date,Date finish_date)
+    public Reservation()
+    {
+        this.reservation_ID="none";
+        this.start_date=null;
+        this.finish_date=null;
+        this.reservation_Name="none";
+        dateFormat = new SimpleDateFormat("dd/MM/YYYY");//Θέτω το πώς θα φορματάρω την ημερομηνία για εκτύπωση
+    }
+    
+    public Reservation(String reservation_ID,String reservation_Name,Date start_date,Date finish_date,Object rented)
     {
         //Αρχικοποιώ τις μεταβλητές με βάση της τιμές που δώθηκαν
         this.reservation_ID=reservation_ID;
         this.start_date=start_date;
         this.finish_date=finish_date;
         this.reservation_Name=reservation_Name;
+        this.rented = rented;
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");//Θέτω το πώς θα φορματάρω την ημερομηνία για εκτύπωση
     }
     
@@ -37,6 +49,11 @@ public class Reservation
     public String getName()
     {//Επιστρέφει το όνομα της κράτησης
         return this.reservation_Name;
+    }
+    
+    public Date getStart_date()
+    {
+        return this.start_date;
     }
     
     @Override

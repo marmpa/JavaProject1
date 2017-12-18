@@ -22,4 +22,5 @@ public class Room
            this.rPrice = rView?((this.rPrice*this.rViewPercent)+this.rPrice):this.rPrice;//αν έχει θέα τότε προσθέτω το αντίστοιχο ποσοστό
            
        }
+       
 }
