@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,8 @@ public class Reservation
     
     protected SimpleDateFormat dateFormat;
     
+    protected HashMap<String,String> typeNamingScheme;
+    
     public Reservation()
     {
         this.reservation_ID="none";
@@ -28,7 +31,19 @@ public class Reservation
         this.finish_date=null;
         this.reservation_Name="none";
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");//Θέτω το πώς θα φορματάρω την ημερομηνία για εκτύπωση
+        
+        typeNamingScheme = new HashMap<>();//Ενα HashMap για ονόματα των ενοικιαζομένων
+        
+        typeNamingScheme.put("Single_Room","Monoklino");
+        typeNamingScheme.put("Double_Room","Diklino");
+        typeNamingScheme.put("Triple_Room", "Triklino");
+        typeNamingScheme.put("Luxury_Room", "Politeles Domatio");
+        typeNamingScheme.put("Buggy", "Gourouna");
+        typeNamingScheme.put("Car", "Autokinito");
+        typeNamingScheme.put("Motorbike", "Mixanaki");
     }
+        
+        
     
     public Reservation(String reservation_ID,String reservation_Name,Date start_date,Date finish_date,Object rented)
     {
@@ -39,11 +54,22 @@ public class Reservation
         this.reservation_Name=reservation_Name;
         this.rented = rented;
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");//Θέτω το πώς θα φορματάρω την ημερομηνία για εκτύπωση
+        
+        typeNamingScheme = new HashMap<>();//Ενα HashMap για ονόματα των ενοικιαζομένων
+        
+        typeNamingScheme.put("Single_Room","Monoklino");
+        typeNamingScheme.put("Double_Room","Diklino");
+        typeNamingScheme.put("Triple_Room", "Triklino");
+        typeNamingScheme.put("Luxury_Room", "Politeles Domatio");
+        typeNamingScheme.put("Buggy", "Gourouna");
+        typeNamingScheme.put("Car", "Autokinito");
+        typeNamingScheme.put("Motorbike", "Mixanaki");
+    
     }
     
     public boolean Contains(Date date)
     {
-        return !(date.after(start_date)||date.before(finish_date));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
+        return !(start_date.after(date)||finish_date.before(date));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
     }
     
      public String getID()
@@ -110,6 +136,19 @@ public class Reservation
     @Override
     public String toString()
     {
-        return dateFormat.format(start_date);
+        String tempString;
+        try
+        {
+        tempString = "\nKratisi gia: "+typeNamingScheme.get(this.rented.getClass().getSimpleName())
+                    +"\nId kratisis: "+this.reservation_ID
+                    +"\nOnoma katoxou kratisis: "+this.reservation_Name
+                    +"\nEinai apo tis "+dateFormat.format(this.start_date)
+                    +" mexri tis "+dateFormat.format(this.finish_date);
+        }
+        catch(Exception e)
+        {
+            tempString="none";
+        }
+        return tempString;
     }
 }

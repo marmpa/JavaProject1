@@ -1,5 +1,7 @@
 package java_project;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Hotel {
 
@@ -61,10 +65,16 @@ public class Hotel {
     public void Add(Object room_car_type) {//προσθέτει νεα κράτηση
        for(Object reservationType:hReservations.reserveList)
        {
-           if(reservationType.getClass().equals(room_car_type.getClass()))
-           {//Εάν ο τύπος της κλασης είναι ίσιος με αυτό που έδωσε ο χρήστης
+           try
+           {
                HashMap tempHashMap = (HashMap) reservationType;//Μετατρέπει σε HashMap
                tempHashMap.put(room_car_type, new TreeMap<Date, Reservation>());//Βάζει ένα νέο
+               
+               return;
+           }
+           catch(Exception e)
+           {
+               System.out.println("Edoses lathos tipou antikeimeno: "+room_car_type.getClass().getSimpleName());
            }
        }
     }
@@ -74,15 +84,47 @@ public class Hotel {
         this.hReservations.Add(reserve_ID, reserve_Name, start_date, finish_date, room_car_type);
     }
     
-    public void Delete(Object room_car_type)
+    public void Delete(String reservetion_id)
     {
+        Object objectToDelete=null;
         for(Object reservationType:hReservations.reserveList)
        {
-           if(reservationType.getClass().equals(room_car_type.getClass()))
-           {//Εάν ο τύπος της κλασης είναι ίσιος με αυτό που έδωσε ο χρήστης
-               HashMap tempHashMap = (HashMap) reservationType;//Μετατρέπει σε HashMap
-               tempHashMap.remove(room_car_type);//Σβήνω αυτό το αντικείμενο
+           
+           for(Object reservationRV:((HashMap) reservationType).keySet())
+           {//Προσπελνώ τα κλειδία του Hashmap για να βρώ αυτο που θέλω
+                try 
+                {   
+                    String methodName = "getID";//Αποθηκεύω σε μία μεταβλητή το όνομα της μεθόδου που θέλω να καλέσω
+                    Method objectMethod = reservationRV.getClass().getMethod(methodName, null);//απθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
+                    //rented ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
+
+                    String reservationRVID = (String) objectMethod.invoke(reservationRV, null);//Καλώ την συνάρτηση getID ώστε να μου επιστρέψει
+                    //το id του αντικειμένου(οχήματος ή δωματίου) για να το συγκρίνω με αυτο που έδωσε ο χρήστης
+                    
+                    if(reservationRVID.equals(reservetion_id))
+                    {//Εάν το ID που δώθηκε είναι ίδιο με αυτό που βρέθηκε
+                        objectToDelete=reservationRV;
+                    }
+
+
+                } catch (NoSuchMethodException ex) { //Διάφορα catch ώστε να λειτουργεί το παραπάνω reflection
+                   Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (SecurityException ex) {
+                   Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (IllegalAccessException ex) {
+                   Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (IllegalArgumentException ex) {
+                   Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+               } catch (InvocationTargetException ex) {
+                   Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+               } 
            }
+           HashMap tempHashMap = (HashMap) reservationType;//Μετατρέπει σε HashMap
+           if(tempHashMap.remove(objectToDelete)!=null);//Σβήνω αυτό το αντικείμενο
+           {
+                return;//Σταματάει αν διαγράψει ένα αντικείμενο
+           }
+       
        }
     }
 
@@ -112,7 +154,7 @@ public class Hotel {
 
                     if (tempReservation.getID().equals(reserve_ID))
                     {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
-                        System.out.println("Leitourgei seira 58 Hotel to SearchCode");
+                       
                         temp_reserve = tempReservation; //θέτει την temp_reserve με την κράτηση που γίνεται το iterate αυτή τη στιγμή
                         return temp_reserve;
                     }
@@ -148,7 +190,7 @@ public class Hotel {
 
                     if (tempReservation.getName().equals(reserve_Name)) 
                     {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
-                        System.out.println("Leitourgei seira 58 Hotel to SearchCode");
+                        
                         temp_reserve = tempReservation; //θέτει την temp_reserve με την κράτηση που γίνεται το iterate αυτή τη στιγμή
 
                         return temp_reserve;
@@ -164,7 +206,7 @@ public class Hotel {
     public List<Reservation> Search_date(Date search_date) 
     {
         List<Reservation> temp_reserve = new ArrayList<Reservation>();
-
+        
         
 
         for (Object tempHashMap : hReservations.reserveList) {
@@ -185,10 +227,11 @@ public class Hotel {
                     Map.Entry tempMapEntry2 = (Map.Entry) entry;//Κάνω cast την εγγραφή σε Map.Entry ώστε να μπορέι να πάρει το value
                     Reservation tempReservation = ((Reservation) tempMapEntry2.getValue());//μετατρέπει tempMapEntry2.getValue 
                     //σε Reservation για να πάρει το ID του
-
+                    
+                    
                     if (tempReservation.Contains(search_date))
                     {//Εαν η ημερομηνία που έδωσε ο χρήστης περιέχεται σε κάποια κράτηση
-                        System.out.println("Leitourgei seira 161 Hotel to SearchDate");
+                       
                         temp_reserve.add(tempReservation); //θέτει την temp_reserve με την κράτηση που γίνεται το iterate αυτή τη στιγμή
                     }
                 }
@@ -225,7 +268,7 @@ public class Hotel {
 
                     if (tempReservation.getID().equals(reserve_ID)) 
                     {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
-                       System.out.println("Leitourgei seira 152 Hotel to Delete");
+                       
                        tempTreeMap.remove(tempReservation.getStart_date());//αφερεί μια εγραφή απο το treeMap
                        //tempTreeMap.get(tempReservation.getStart_date());
                        return;
@@ -273,7 +316,7 @@ public class Hotel {
             }
         }
         
-        System.out.println("Periexei tous: ");
+        System.out.println("Periexei: ");
         
         for(String tempWord: typeHashSet)
         {
@@ -314,7 +357,7 @@ public class Hotel {
                     
                     if (tempReservation.Contains(occupied_date)) 
                     {//εαν η μέρα που δώθηκε περιέχεται στην κράτηση
-                        typeHashSet.add(tempReservation.getClass().getSimpleName());//Προσθέτω το όνομα της κλάσης στο πίνακα
+                        typeHashSet.add(tempReservation.GetRented().getClass().getSimpleName());//Προσθέτω το όνομα της κλάσης στο πίνακα
                         //μονο μια φορά καθώς είναι hashset
                         
                     }
@@ -324,6 +367,7 @@ public class Hotel {
         }
         for(String tempWord: typeHashSet)
         {
+            
             //τσεκάρω αν τα αντικείμενα που έβαλα στο typeHashSet είναι μονόκλινα ή δίκλινα ή τρίκλινα
             if(typeNamingScheme.get(tempWord).equalsIgnoreCase("Monoklino")||typeNamingScheme.get(tempWord).equalsIgnoreCase("Diklino")||typeNamingScheme.get(tempWord).equalsIgnoreCase("Triklino"))
             {
@@ -360,6 +404,8 @@ public class Hotel {
                 //τύπου treeMap ώστε να μπορώ να έχω πρόσβαση στα αντικείμενα του
                 
                 Map.Entry<Date, Reservation> entry = tempTreeMap.floorEntry(month);//Περνει το entry που βρήσκεται στο floorEntry
+                //ΤΟ MONTH ΑΠΟ ΠΑΝΩ ΘΈΛΕΙ ΑΛΑΓΕΊ ΘΈΛΕΙ ΤΎΠΟΥ Date!!!!!!!!!!!!!!!!!!!!!!!!!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 if (entry != null) 
                 {//εαν βρήκε κάποιο entry
                     Reservation tempReservation = entry.getValue();//Πέρνει το Value του entry
@@ -373,5 +419,7 @@ public class Hotel {
         }
         System.out.println("Ta xrimata pou ebgale to ksenodoxeio auton ton mina einai: " + Sum_cost);
     }
+    
+    
     
 }

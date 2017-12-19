@@ -1,13 +1,18 @@
 package java_project;
 public class Vehicle 
 {
-   protected int vID;//Μοναδικό ID του οχήματος
+   protected String vID;//Μοναδικό ID του οχήματος
    protected int vPrice;//τιμή οχήματος ανα μέρα
    protected int vWheels;//αριθμός τροχών οχήματος
    
-   public Vehicle(int vID)
+   public Vehicle(String vID)
    {//Constructor οχήματος καθορίζει το μοναδικό ID
        this.vID = vID;
+   }
+   
+   public String getID()
+   {
+           return this.vID;
    }
    
    public int getPrice()

@@ -35,10 +35,10 @@ public class Reserve {
         Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date,room_car_type);//Φτιάχνει μια νέα κράτηση
         
         //ΠΡΟΣΟΧΗΗΗ ΝΑ ΚΑΝΩ ΕΛΕΝΧΩ ΓΙΑ ΔΙΠΛΩΤΥΠΑ
-        System.out.println("Douleuei seira 38 to room available i car available");
+        
         for(Object objectType:reserveList)
         {
-            System.out.println();
+            
             try
             {
                 HashMap tempHashMap = (HashMap) objectType;
@@ -46,12 +46,13 @@ public class Reserve {
                 if(tempHashMap.get(room_car_type) == null)
                 {//Τσεκάρει αν υπάρχει το δωμάτιο στο ξενοδοχείο
                    tempHashMap.put(room_car_type, new TreeMap<Date,Reservation>());
+                    //System.out.println("Natos o paiktis ksexnaei ta antikeimena seira 49 reserve");
                 }
                 
                  if(Available(start_date, finish_date,room_car_type))
                  {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
-                     System.out.println("Douleuei seira 53 to room available i car available");
-                     ((TreeMap) tempHashMap.get(room_car_type)).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
+                     
+                     ((TreeMap) tempHashMap.get(room_car_type)).putIfAbsent(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
                      //αφού την κάνει cast σε TreeMap
                      return;
                  }
@@ -129,6 +130,10 @@ public class Reserve {
                     tempDate=tempCal.getTime();//Μετατρέπει το calendar σε date 
                 }
                 while(tempDate.compareTo(finish_date)<=0);//Ώσο η tempDate είναι μικρότερη η ίση με την finish_date
+            }
+            catch(Exception e)
+            {
+                
             }
         }
         

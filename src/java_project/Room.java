@@ -23,6 +23,11 @@ public class Room
            
        }
        
+       public String getID()
+       {
+           return this.rID;
+       }
+       
        public Double getPrice()
        {//επιστρέφει την τιμή
            return this.rPrice;
