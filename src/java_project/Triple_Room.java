@@ -1,5 +1,5 @@
 package java_project;
-public class Triple_Room extends Single_Room
+public class Triple_Room extends Room
 {
     public Triple_Room(String rID,double rPrice,boolean rView)
     {//Constructor τρίκλινου δωμάτιο

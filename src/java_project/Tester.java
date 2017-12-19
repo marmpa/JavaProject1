@@ -14,7 +14,7 @@ public class Tester {
         List<Room> rooms = new ArrayList<>();
         List<Vehicle> vehicles = new ArrayList<>();
         
-        rooms.add(new Single_Room("50", 0, 0, 0, true));
+        rooms.add(new Single_Room("50", 0, true));
         rooms.add(new Luxury_Room("50",50, true,true));
         rooms.add(new Double_Room("50", 100, true));
         
@@ -32,7 +32,7 @@ public class Tester {
         calendar.set(2011, 0, 7);
         to = calendar.getTime();
         
-        hotel.NewReservation("120", "Marios", from, to, rooms.get(0));
+        hotel.NewReservation("120", "Marios", from, to, vehicles.get(2));
         
         //System.out.println(hotel.Search_date(from).get(0).getName());
         

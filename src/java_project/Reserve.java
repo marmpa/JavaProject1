@@ -35,13 +35,12 @@ public class Reserve {
         Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date,room_car_type);//Φτιάχνει μια νέα κράτηση
         
         //ΠΡΟΣΟΧΗΗΗ ΝΑ ΚΑΝΩ ΕΛΕΝΧΩ ΓΙΑ ΔΙΠΛΩΤΥΠΑ
-        System.out.println("Douleuei seira 57 to room available i car available");
+        System.out.println("Douleuei seira 38 to room available i car available");
         for(Object objectType:reserveList)
         {
-            System.out.println(" yuparxei kr "+room_car_type.getClass().getSuperclass().getName());
-            if(objectType.getClass().equals(room_car_type.getClass()))
-            {//Αντιστοιχο το αντικείμενο που δώθηκε με την αντίστοιχη κλάση
-                
+            System.out.println();
+            try
+            {
                 HashMap tempHashMap = (HashMap) objectType;
                 
                 if(tempHashMap.get(room_car_type) == null)
@@ -51,11 +50,17 @@ public class Reserve {
                 
                  if(Available(start_date, finish_date,room_car_type))
                  {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
-                     System.out.println("Douleuei seira 57 to room available i car available");
-                     ((TreeMap) tempHashMap.get(8)).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
+                     System.out.println("Douleuei seira 53 to room available i car available");
+                     ((TreeMap) tempHashMap.get(room_car_type)).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
                      //αφού την κάνει cast σε TreeMap
+                     return;
                  }
             }
+            catch(Exception e)
+            {
+                
+            }
+            
         }
         
     }
@@ -100,7 +105,7 @@ public class Reserve {
         for(Object objectType:reserveList)
         {
             
-            if(objectType.getClass().equals(room_car_type.getClass()))
+            try
             {//Αντιστοιχο το αντικείμενο που δώθηκε με την αντίστοιχη κλάση
                 
                 HashMap tempHashMap = (HashMap) objectType;//Μετατρέπει το objectType σε HashMap για να μπορώ να χρεισημοποιείσω συναρτήσεις του
