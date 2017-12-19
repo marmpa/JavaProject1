@@ -70,7 +70,7 @@ public class Hotel {
     }
     
     public void NewReservation(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
-    {
+    {//Προσθέτω μια νέα κράτηση στην λίστα
         this.hReservations.Add(reserve_ID, reserve_Name, start_date, finish_date, room_car_type);
     }
     

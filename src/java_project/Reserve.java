@@ -35,9 +35,10 @@ public class Reserve {
         Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date,room_car_type);//Φτιάχνει μια νέα κράτηση
         
         //ΠΡΟΣΟΧΗΗΗ ΝΑ ΚΑΝΩ ΕΛΕΝΧΩ ΓΙΑ ΔΙΠΛΩΤΥΠΑ
-        
+        System.out.println("Douleuei seira 57 to room available i car available");
         for(Object objectType:reserveList)
         {
+            System.out.println(" yuparxei kr "+room_car_type.getClass().getSuperclass().getName());
             if(objectType.getClass().equals(room_car_type.getClass()))
             {//Αντιστοιχο το αντικείμενο που δώθηκε με την αντίστοιχη κλάση
                 
@@ -51,7 +52,7 @@ public class Reserve {
                  if(Available(start_date, finish_date,room_car_type))
                  {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
                      System.out.println("Douleuei seira 57 to room available i car available");
-                     ((TreeMap) tempHashMap.get(room_car_type)).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
+                     ((TreeMap) tempHashMap.get(8)).put(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
                      //αφού την κάνει cast σε TreeMap
                  }
             }
@@ -98,6 +99,7 @@ public class Reserve {
         
         for(Object objectType:reserveList)
         {
+            
             if(objectType.getClass().equals(room_car_type.getClass()))
             {//Αντιστοιχο το αντικείμενο που δώθηκε με την αντίστοιχη κλάση
                 
@@ -110,12 +112,14 @@ public class Reserve {
                     if(entry!=null)
                     {//Εάν δεν βρήκε τπτ το floorEntry σημαίνει πως δεν υπάρχει κράτηση πριν την συγκεκριμένη μέρα
                         Reservation tempReservation = entry.getValue();//παίρνουμε την κράτηση και την αποθηκεύουμαι σε μία μεταβλητή
-
+                            
                         if(tempReservation.Contains(tempDate))
                         {//Εάν η κράτηση περιέχει την ημερομηνία που δώσαμε επιστρέφουμαι false
+                            
                             return false;
                         }
                     }
+                    
                     tempCal.add(Calendar.DATE,1);//Προσθέτει 1 ημερολογιακή μέρα στην είδη υπάρχοντα μέρα
                     tempDate=tempCal.getTime();//Μετατρέπει το calendar σε date 
                 }

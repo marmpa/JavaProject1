@@ -34,7 +34,7 @@ public class Tester {
         
         hotel.NewReservation("120", "Marios", from, to, rooms.get(0));
         
-        System.out.println(hotel.Search_date(from).get(0).getName());
+        //System.out.println(hotel.Search_date(from).get(0).getName());
         
     }
 
