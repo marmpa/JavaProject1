@@ -1,6 +1,7 @@
 package java_project;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -182,6 +183,46 @@ public class Hotel {
         return temp_reserve;//επιστρέφει την κράτηση
     }
     
+    
+    public void Delete_reservation(String reserve_ID) 
+    {//Δειαγράφη μία κράτηση
+        Reservation temp_reserve = new Reservation();
+
+        for (Object tempHashMap : hReservations.reserveList) 
+        {//Προσπελνά τη λίστα με τα Reservations
+            Set tempEntrySet = ((HashMap) tempHashMap).entrySet();//Μετατρέπει σε set ώστε να μπορέσει να διαβαστεί μετά
+
+            Iterator tempIterator = tempEntrySet.iterator();//Φτιάχνει αντικείμενο iterator ώστε να μπορεί να γίνει προσπέλαση με 
+            //το while loop παρακάτω
+
+            while (tempIterator.hasNext()) 
+            {//ώσο υπάρχει επόμενη εγραφή στο iterator
+                Map.Entry tempMapEntry = (Map.Entry) tempIterator.next();//Κάνει cast σε Map.Entry ώστε να έχω πρόσβαση στο key και value 
+                //του HashMap
+
+                TreeMap tempTreeMap = (TreeMap) tempMapEntry.getValue();//Μετατρέπει το tempMapEntry.getValue σε αντικείμενο
+                //τύπου treeMap ώστε να μπορώ να έχω πρόσβαση στα αντικείμενα του
+                for (Object entry : tempTreeMap.entrySet()) 
+                {//Προσπελνά το treeMap
+                    Map.Entry tempMapEntry2 = (Map.Entry) entry;//Κάνω cast την εγγραφή σε Map.Entry ώστε να μπορέι να πάρει το value
+                    Reservation tempReservation = ((Reservation) tempMapEntry2.getValue());//μετατρέπει tempMapEntry2.getValue 
+                    //σε Reservation για να πάρει το ID του
+
+                    if (tempReservation.getID().equals(reserve_ID)) 
+                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
+                       System.out.println("Leitourgei seira 152 Hotel to Delete");
+                       tempTreeMap.remove(tempReservation.getStart_date());//αφερεί μια εγραφή απο το treeMap
+                       //tempTreeMap.get(tempReservation.getStart_date());
+                       return;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+    
     public void UniqueTypes(Date occupied_date)
     {
         HashSet<String> typeHashSet = new HashSet<>();
@@ -225,18 +266,19 @@ public class Hotel {
         }
     }
     
-    public void TypeCount(String roomType)
+    public void TypeCount(Date occupied_date)
     {
+        /*Marie sosto to exeis void einai apla thelei na pairnei oxi string alla imerominia kai na kanei idio 
+        elegxo me prin apla me 2 counter pleon!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+        
         //Na alakso tipo epistrofis!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    }
-    
-    public void Delete_reservation(String reserve_ID) 
-    {//Δειαγράφη μία κράτηση
-        Reservation temp_reserve = new Reservation();
-
+        int normal_counter=0; //counter κοινών
+        int luxury_counter=0; //counter πολυτελών
+        HashSet<String> typeHashSet = new HashSet<>();
+        
         for (Object tempHashMap : hReservations.reserveList) 
-        {//Προσπελνά τη λίστα με τα Reservations
+        {
             Set tempEntrySet = ((HashMap) tempHashMap).entrySet();//Μετατρέπει σε set ώστε να μπορέσει να διαβαστεί μετά
 
             Iterator tempIterator = tempEntrySet.iterator();//Φτιάχνει αντικείμενο iterator ώστε να μπορεί να γίνει προσπέλαση με 
@@ -249,24 +291,72 @@ public class Hotel {
 
                 TreeMap tempTreeMap = (TreeMap) tempMapEntry.getValue();//Μετατρέπει το tempMapEntry.getValue σε αντικείμενο
                 //τύπου treeMap ώστε να μπορώ να έχω πρόσβαση στα αντικείμενα του
-                for (Object entry : tempTreeMap.entrySet()) 
-                {//Προσπελνά το treeMap
-                    Map.Entry tempMapEntry2 = (Map.Entry) entry;//Κάνω cast την εγγραφή σε Map.Entry ώστε να μπορέι να πάρει το value
-                    Reservation tempReservation = ((Reservation) tempMapEntry2.getValue());//μετατρέπει tempMapEntry2.getValue 
-                    //σε Reservation για να πάρει το ID του
-
-                    if (tempReservation.getID().equals(reserve_ID)) 
-                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
-                       System.out.println("Leitourgei seira 152 Hotel to Delete");
-                       tempTreeMap.remove(tempReservation.getStart_date());//αφερεί μια εγραφή απο το treeMap
-                       //tempTreeMap.get(tempReservation.getStart_date());
-                       return;
+                
+                Map.Entry<Date, Reservation> entry = tempTreeMap.floorEntry(occupied_date);//Περνει το entry που βρήσκεται στο floorEntry
+                if (entry != null) 
+                {//εαν βρήκε κάποιο entry
+                    Reservation tempReservation = entry.getValue();//Πέρνει το Value του entry
+                    
+                    if (tempReservation.Contains(occupied_date)) 
+                    {//εαν η μέρα που δώθηκε περιέχεται στην κράτηση
+                        typeHashSet.add(tempReservation.getClass().getSimpleName());//Προσθέτω το όνομα της κλάσης στο πίνακα
+                        //μονο μια φορά καθώς είναι hashset
+                        
                     }
                 }
-
+                
             }
-
         }
-
+        for(String tempWord: typeHashSet)
+        {
+            //τσεκάρω αν τα αντικείμενα που έβαλα στο typeHashSet είναι μονόκλινα ή δίκλινα ή τρίκλινα
+            if(typeNamingScheme.get(tempWord).equalsIgnoreCase("Monoklino")||typeNamingScheme.get(tempWord).equalsIgnoreCase("Diklino")||typeNamingScheme.get(tempWord).equalsIgnoreCase("Triklino"))
+            {
+                normal_counter++; //και αυξάνω ένα normal counter
+            }
+            else if(typeNamingScheme.get(tempWord).equalsIgnoreCase("Politeles Domatio"))//ή αν είναι πολυτελή
+            {
+                luxury_counter++; //και αυξάνω πάλι αντίστοιχο counter
+            }
+        }
+        System.out.println("To koina domatia pou einai kleismena tin imerominia "+ occupied_date + " einai: " + normal_counter);
+        System.out.println("To politeli domatia pou einai kleismena tin imerominia "+ occupied_date + " einai: " + luxury_counter);     
     }
+    
+    public void countPrice()
+    {
+        int month=Calendar.getInstance().get(Calendar.MONTH);//παίρνω τον τρέχων μήνα
+        
+        double Sum_cost=0;
+         
+        for (Object tempHashMap : hReservations.reserveList) 
+        {
+            Set tempEntrySet = ((HashMap) tempHashMap).entrySet();//Μετατρέπει σε set ώστε να μπορέσει να διαβαστεί μετά
+
+            Iterator tempIterator = tempEntrySet.iterator();//Φτιάχνει αντικείμενο iterator ώστε να μπορεί να γίνει προσπέλαση με 
+            //το while loop παρακάτω
+
+            while (tempIterator.hasNext()) 
+            {//ώσο υπάρχει επόμενη εγραφή στο iterator
+                Map.Entry tempMapEntry = (Map.Entry) tempIterator.next();//Κάνει cast σε Map.Entry ώστε να έχω πρόσβαση στο key και value 
+                //του HashMap
+
+                TreeMap tempTreeMap = (TreeMap) tempMapEntry.getValue();//Μετατρέπει το tempMapEntry.getValue σε αντικείμενο
+                //τύπου treeMap ώστε να μπορώ να έχω πρόσβαση στα αντικείμενα του
+                
+                Map.Entry<Date, Reservation> entry = tempTreeMap.floorEntry(month);//Περνει το entry που βρήσκεται στο floorEntry
+                if (entry != null) 
+                {//εαν βρήκε κάποιο entry
+                    Reservation tempReservation = entry.getValue();//Πέρνει το Value του entry
+                    
+                    if (tempReservation.getStart_date().getMonth()==month)
+                    {//εαν μηνας που έχουμε περιέχεται στην κράτηση
+                        Sum_cost+=tempReservation.Cost(); //προσθέτουμε στο άρθοισμα τα χρήματα που λάβαμε
+                    }
+                }
+            }
+        }
+        System.out.println("Ta xrimata pou ebgale to ksenodoxeio auton ton mina einai: " + Sum_cost);
+    }
+    
 }

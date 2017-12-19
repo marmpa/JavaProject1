@@ -23,4 +23,9 @@ public class Room
            
        }
        
+       public Double getPrice()
+       {
+           return this.rPrice;
+       }
+       
 }

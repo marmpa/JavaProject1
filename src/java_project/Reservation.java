@@ -56,6 +56,19 @@ public class Reservation
         return this.start_date;
     }
     
+    public Double Cost()
+    {
+        double cost=0;
+        long difference = start_date.getTime() - finish_date.getTime();//παίρνουμε την διαφορά μεταξύ τους σε milliseconds
+	float daysBetween = (difference / (1000*60*60*24));//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
+        
+        //|--------------------------------------------------------------------------------------------------|
+        //|cost=daysBetween*rented.getPrice(); ΔΙΟΡΘΩΣΗ ΊΣΩΣ ΘΈΛΕΙ CAR & VEHICLE ΞΕΧΩΡΙΣΤΑ ΓΙΑΤΙ ΒΓΑΖΕΙ ΛΑΘΟΣ|
+        //|--------------------------------------------------------------------------------------------------|
+       
+        return cost;
+    }
+    
     @Override
     public int hashCode()
     {//Επιστρέφει το μοναδικό νούμερο που αντιστοιχεί στην κράτηση των συγκεκριμένων ημερών

@@ -9,4 +9,9 @@ public class Vehicle
    {//Constructor οχήματος καθορίζει το μοναδικό ID
        this.vID = vID;
    }
+   
+   public int getPrice()
+   {
+       return this.vPrice;
+   }
 }
