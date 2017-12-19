@@ -1,9 +1,13 @@
 
 package java_project;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Reservation 
@@ -59,14 +63,37 @@ public class Reservation
     public Double Cost()
     {
         double cost=0;
-        long difference = start_date.getTime() - finish_date.getTime();//παίρνουμε την διαφορά μεταξύ τους σε milliseconds
-	float daysBetween = (difference / (1000*60*60*24));//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
-        
-        //|--------------------------------------------------------------------------------------------------|
-        //|cost=daysBetween*rented.getPrice(); ΔΙΟΡΘΩΣΗ ΊΣΩΣ ΘΈΛΕΙ CAR & VEHICLE ΞΕΧΩΡΙΣΤΑ ΓΙΑΤΙ ΒΓΑΖΕΙ ΛΑΘΟΣ|
-        //|--------------------------------------------------------------------------------------------------|
-       
+        long difference = this.finish_date.getTime() - this.start_date.getTime();//παίρνουμε την διαφορά μεταξύ τους σε milliseconds
+        float daysBetween = (difference / (1000*60*60*24));//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
+        try 
+        {
+            String methodName = "getPrice";//Αποθηκεύω σε μία μεταβλητή το όνομα της μεθόδου που θέλω να καλέσω
+            Method objectMethod = rented.getClass().getMethod(methodName, null);//απθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
+            //rented ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
+            
+            cost = daysBetween * (double) objectMethod.invoke(rented, null);// δημιουργώ το κόστος το οποίο υπολογίζεται με βάση το γινόμενο
+            //του αριθμό των ημερών οι οποίες ενοικιάζεται το αντικείμενο και το αποτέλεσμα της κλήσης της μεθόδου που δημιούργησα παραπάνω
+            //αφού μετατραπεί σε double τύπο
+            
+            
+            
+        } catch (NoSuchMethodException ex) {//διάφορα catch τα οποία χρειάζονται για να μην πετάει error το παραπάνω
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return cost;
+    }
+    
+    public Object GetRented()
+    {
+        return this.rented;
     }
     
     @Override

@@ -21,7 +21,7 @@ public class Hotel {
     
 
     //na diloso domatia kai autokinita
-    public Hotel(String hName, String hLocation, int hRating, List<Room> hRooms, List<Car> hCars) {//Constructor ξενοδοχείου δημιουργεί τις ιδιότητες του ξενοδοχείου
+    public Hotel(String hName, String hLocation, int hRating, List<Room> hRooms, List<Vehicle> hVehicle) {//Constructor ξενοδοχείου δημιουργεί τις ιδιότητες του ξενοδοχείου
 
         //Sxoleia gia thoma: Prepei na baleis kratiseis ston constructora den ksero pos na to po kai ti tipou thes
         //Sxoleia gia thoma: Epeiseis den ksero an thes listes gia ta domatia kai pos opote kai auto an thes alakse to
@@ -34,6 +34,16 @@ public class Hotel {
             this.hRating = hRating;
         } else {//αλλιώς το θέτω με 2 (το χαμηλότερο πιθανό)
             this.hRating = 2;
+        }
+        
+        for(Room tempRoom:hRooms)
+        {//Εάν δωθεί δωμάτιο τα προσθέτη στο ξενοδοχείο
+            this.Add(tempRoom);
+        }
+        
+        for(Vehicle tempCar:hVehicle)
+        {//Εαν δωθεί όχημα τα προσθέτη στο ξενοδοχείο
+            this.Add(tempCar);
         }
         
         typeNamingScheme = new HashMap<>();//Ενα HashMap για ονόματα των ενοικιαζομένων
@@ -57,6 +67,11 @@ public class Hotel {
                tempHashMap.put(room_car_type, new TreeMap<Date, Reservation>());//Βάζει ένα νέο
            }
        }
+    }
+    
+    public void NewReservation(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
+    {
+        this.hReservations.Add(reserve_ID, reserve_Name, start_date, finish_date, room_car_type);
     }
     
     public void Delete(Object room_car_type)
@@ -225,7 +240,7 @@ public class Hotel {
     
     public void UniqueTypes(Date occupied_date)
     {
-        HashSet<String> typeHashSet = new HashSet<>();
+        HashSet<String> typeHashSet = new HashSet<>();//Δημιουργώ ένα νέο αντικείμενο τύπου Hashset για να αποθηκεύσω μοναδικά string
         
         for (Object tempHashMap : hReservations.reserveList) 
         {
@@ -249,7 +264,7 @@ public class Hotel {
                     
                     if (tempReservation.Contains(occupied_date)) 
                     {//εαν η μέρα που δώθηκε περιέχεται στην κράτηση
-                        typeHashSet.add(tempReservation.getClass().getSimpleName());//Προσθέτω το όνομα της κλάσης στο πίνακα
+                        typeHashSet.add(tempReservation.GetRented().getClass().getSimpleName());//Προσθέτω το όνομα της κλάσης στο πίνακα
                         //μονο μια φορά καθώς είναι hashset
                         
                     }

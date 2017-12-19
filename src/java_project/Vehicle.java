@@ -11,7 +11,7 @@ public class Vehicle
    }
    
    public int getPrice()
-   {
+   {//επιστρέφει την τιμή
        return this.vPrice;
    }
 }

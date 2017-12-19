@@ -24,7 +24,7 @@ public class Room
        }
        
        public Double getPrice()
-       {
+       {//επιστρέφει την τιμή
            return this.rPrice;
        }
        
