@@ -79,9 +79,9 @@ public class Tester {
         calendar.set(2017, 11, 25);
         betw=calendar.getTime();
         System.out.println(hotel.Search_code("5"));//δουλευει
-        System.out.println(hotel.Search_date(betw).get(0));//!!!!εδω δεν επιστρέφει λίστα αλλά μόνο ένα στοιχείο!!!!
+        System.out.println(hotel.Search_date(betw));//!!!!εδω δεν επιστρέφει λίστα αλλά μόνο ένα στοιχείο!!!!
         System.out.println(hotel.Search_name("Tom"));//δουλευει
-        hotel.Delete_reservation("1");//δουλευει
+        hotel.Delete_reservation("2");//δουλευει
         hotel.UniqueTypes(betw);//δουλευει
         hotel.TypeCount(betw);//δουλευει
         hotel.countPrice(betw); //!!!!εχει θέμα δεν μπορεί να διαβάσει και να υπολογίσει ΜΕ ΟΧΗΜΑΤΑ λεφτά!!!! 
