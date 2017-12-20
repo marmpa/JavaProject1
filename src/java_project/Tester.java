@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 public class Tester {
@@ -16,17 +17,22 @@ public class Tester {
         List<Room> rooms = new ArrayList<>();
         List<Vehicle> vehicles = new ArrayList<>();
         
-        rooms.add(new Single_Room("50", 2, true));
-        rooms.add(new Luxury_Room("65",50, true,true));
-        rooms.add(new Double_Room("70", 100, true));
+        System.out.println("Xristi dose poso domation (basiko poso): ");
+        Scanner sc =new Scanner(System.in);
+        double price=sc.nextDouble();
         
-        vehicles.add(new Car("70"));
-        vehicles.add(new Motorbike("1210"));
-        vehicles.add(new Buggy("39"));
+        rooms.add(new Single_Room("200", price, true));
+        rooms.add(new Single_Room("201", price, false));
+        rooms.add(new Luxury_Room("202",price, true,true));
+        rooms.add(new Double_Room("203", price, true));
+        
+        vehicles.add(new Car("100"));
+        vehicles.add(new Motorbike("101"));
+        vehicles.add(new Buggy("102"));
         
         Hotel hotel = new Hotel("Aigaio", "Samos", 4, rooms, vehicles);
         
-        hotel.Add(new Triple_Room("120", 70, true));
+        hotel.Add(new Triple_Room("120", price, true));
         hotel.Delete("120");
         
         
@@ -34,39 +40,52 @@ public class Tester {
         Date from, to;
         Calendar calendar = Calendar.getInstance();
 
-        calendar.set(2011, 0, 4);
+        calendar.set(2017, 11, 20);
         from = calendar.getTime();
-        calendar.set(2011, 0, 7);
+        calendar.set(2017, 11, 27);
         to = calendar.getTime();
         
-        hotel.NewReservation("120", "Marios", from, to, vehicles.get(0));
+        hotel.NewReservation("1", "Marios", from, to, vehicles.get(2));
         
-         calendar.set(2011, 1, 4);
+         calendar.set(2017, 11, 25);
         from = calendar.getTime();
-        calendar.set(2011, 3, 7);
+        calendar.set(2017, 11, 29);
         to = calendar.getTime();
         
-        hotel.NewReservation("1200", "Giota", from, to, rooms.get(0));
+        hotel.NewReservation("2", "Giota", from, to, rooms.get(0));
         
-        calendar.set(2011, 1, 4);
+        calendar.set(2017, 11, 18);
         from = calendar.getTime();
-        calendar.set(2011, 3, 7);
+        calendar.set(2017, 11, 25);
         to = calendar.getTime();
         
-        hotel.NewReservation("1300", "Panos", from, to, rooms.get(1));
+        hotel.NewReservation("3", "Panos", from, to, rooms.get(1));
+        
+        calendar.set(2017, 11, 20);
+        from = calendar.getTime();
+        calendar.set(2017, 11, 29);
+        to = calendar.getTime();
+        
+        hotel.NewReservation("4", "Tom", from, to, rooms.get(2));
+        
+        calendar.set(2017, 11, 20);
+        from = calendar.getTime();
+        calendar.set(2017, 11, 29);
+        to = calendar.getTime();
+        
+        hotel.NewReservation("5", "Greg", from, to, rooms.get(3));
         
         Date betw;
-        calendar.set(2011, 1, 26);
+        calendar.set(2017, 11, 25);
         betw=calendar.getTime();
-        System.out.println(hotel.Search_code("120"));
-        System.out.println(hotel.Search_date(betw).get(0));
-        System.out.println(hotel.Search_name("Panos"));
-        hotel.Delete("70");
-        System.out.println(hotel.Search_code("120"));
-        hotel.UniqueTypes(betw);
-        
-        hotel.TypeCount(betw);
-        
+        System.out.println(hotel.Search_code("5"));//δουλευει
+        System.out.println(hotel.Search_date(betw).get(0));//!!!!εδω δεν επιστρέφει λίστα αλλά μόνο ένα στοιχείο!!!!
+        System.out.println(hotel.Search_name("Tom"));//δουλευει
+        hotel.Delete_reservation("1");//δουλευει
+        hotel.UniqueTypes(betw);//δουλευει
+        hotel.TypeCount(betw);//δουλευει
+        hotel.countPrice(betw); //!!!!εχει θέμα δεν μπορεί να διαβάσει και να υπολογίσει ΜΕ ΟΧΗΜΑΤΑ λεφτά!!!! 
+        //τα άλλα τα μετράει νομίζω απλα μετράει μια μέρα λιγότερη, πχ απο 20-25 είναι 5 μέρες και όχι 6! αυτο μόνο
     }
 
 }

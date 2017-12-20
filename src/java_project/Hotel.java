@@ -95,7 +95,7 @@ public class Hotel {
                 try 
                 {   
                     String methodName = "getID";//Αποθηκεύω σε μία μεταβλητή το όνομα της μεθόδου που θέλω να καλέσω
-                    Method objectMethod = reservationRV.getClass().getMethod(methodName, null);//απθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
+                    Method objectMethod = reservationRV.getClass().getMethod(methodName, null);//απoθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
                     //rented ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
 
                     String reservationRVID = (String) objectMethod.invoke(reservationRV, null);//Καλώ την συνάρτηση getID ώστε να μου επιστρέψει
@@ -333,7 +333,7 @@ public class Hotel {
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         int normal_counter=0; //counter κοινών
         int luxury_counter=0; //counter πολυτελών
-        HashSet<String> typeHashSet = new HashSet<>();
+        List<String> typeHashSet = new ArrayList<>();
         
         for (Object tempHashMap : hReservations.reserveList) 
         {
@@ -382,9 +382,9 @@ public class Hotel {
         System.out.println("To politeli domatia pou einai kleismena tin imerominia "+ occupied_date + " einai: " + luxury_counter);     
     }
     
-    public void countPrice()
+    public void countPrice(Date occupied_date)
     {
-        int month=Calendar.getInstance().get(Calendar.MONTH);//παίρνω τον τρέχων μήνα
+        int month=occupied_date.getMonth();//παίρνω τον τρέχων μήνα
         
         double Sum_cost=0;
          
@@ -403,7 +403,7 @@ public class Hotel {
                 TreeMap tempTreeMap = (TreeMap) tempMapEntry.getValue();//Μετατρέπει το tempMapEntry.getValue σε αντικείμενο
                 //τύπου treeMap ώστε να μπορώ να έχω πρόσβαση στα αντικείμενα του
                 
-                Map.Entry<Date, Reservation> entry = tempTreeMap.floorEntry(month);//Περνει το entry που βρήσκεται στο floorEntry
+                Map.Entry<Date, Reservation> entry = tempTreeMap.floorEntry(occupied_date);//Περνει το entry που βρήσκεται στο floorEntry
                 //ΤΟ MONTH ΑΠΟ ΠΑΝΩ ΘΈΛΕΙ ΑΛΑΓΕΊ ΘΈΛΕΙ ΤΎΠΟΥ Date!!!!!!!!!!!!!!!!!!!!!!!!!
                 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 if (entry != null) 
