@@ -14,24 +14,30 @@ public class Tester {
 
     public static void main(String[] args) 
     {
+        //φτιάχνουμε δύο arraylist τύπου room και vehicle για να βάλουμε μέσα ότι περιέχει το ξενοδοχείο
         List<Room> rooms = new ArrayList<>();
         List<Vehicle> vehicles = new ArrayList<>();
         
+        //διαβάζουμε με ένα scanner το βασικό ποσό που θέλει ο χρήστης να έχει ένα απλό δωμάτιο
         System.out.println("Xristi dose poso domation (basiko poso): ");
         Scanner sc =new Scanner(System.in);
         double price=sc.nextDouble();
         
+        //προσθέτουμε με την τιμή αυτή διάφορους τυχαίους constructor στην λίστα rooms
         rooms.add(new Single_Room("200", price, true));
         rooms.add(new Single_Room("201", price, false));
         rooms.add(new Luxury_Room("202",price, true,true));
         rooms.add(new Double_Room("203", price, true));
         
+        //αντίστοιχα φτιάχνουμε και οχήματα
         vehicles.add(new Car("100"));
         vehicles.add(new Motorbike("101"));
         vehicles.add(new Buggy("102"));
         
+        //δημιουργούμε ένα ξενοδοχείο με τις δύο λίστες από τα δωμάτια και οχήματα που έχουμε σαν ορισματα
         Hotel hotel = new Hotel("Aigaio", "Samos", 4, rooms, vehicles);
         
+        //δείχνουμε ότι χωρίς προβλημα προσθέτουμε και αφαιρούμε αντικείμενα απο το ξενοδοχείο
         hotel.Add(new Triple_Room("120", price, true));
         hotel.Delete("120");
         
@@ -47,38 +53,42 @@ public class Tester {
         
         hotel.NewReservation("1", "Marios", from, to, vehicles.get(2));
         
-         calendar.set(2017, 11, 25);//παρομοίος
-        from = calendar.getTime();//παρομοίος
-        calendar.set(2017, 11, 29);//παρομοίος
-        to = calendar.getTime();//παρομοίος
+         calendar.set(2017, 11, 25);//παρομοίως
+        from = calendar.getTime();//παρομοίως
+        calendar.set(2017, 11, 29);//παρομοίως
+        to = calendar.getTime();//παρομοίως
         
         hotel.NewReservation("2", "Giota", from, to, rooms.get(0));
         
-        calendar.set(2017, 11, 18);//παρομοίος
-        from = calendar.getTime();//παρομοίος
-        calendar.set(2017, 11, 25);//παρομοίος
-        to = calendar.getTime();//παρομοίος
+        calendar.set(2017, 11, 18);//παρομοίως
+        from = calendar.getTime();//παρομοίως
+        calendar.set(2017, 11, 25);//παρομοίως
+        to = calendar.getTime();//παρομοίως
         
         hotel.NewReservation("3", "Panos", from, to, rooms.get(1));
         
-        calendar.set(2017, 11, 20);//παρομοίος
-        from = calendar.getTime();//παρομοίος
-        calendar.set(2017, 11, 29);//παρομοίος
-        to = calendar.getTime();//παρομοίος
+        calendar.set(2017, 11, 20);//παρομοίως
+        from = calendar.getTime();//παρομοίως
+        calendar.set(2017, 11, 29);//παρομοίως
+        to = calendar.getTime();//παρομοίως
         
         hotel.NewReservation("4", "Tom", from, to, rooms.get(2));
         
-        calendar.set(2017, 11, 20);//παρομοίος
-        from = calendar.getTime();//παρομοίος
-        calendar.set(2017, 11, 29);//παρομοίος
-        to = calendar.getTime();//παρομοίος
+        calendar.set(2017, 11, 20);//παρομοίως
+        from = calendar.getTime();//παρομοίως
+        calendar.set(2017, 11, 29);//παρομοίως
+        to = calendar.getTime();//παρομοίως
         
         hotel.NewReservation("5", "Greg", from, to, rooms.get(3));
         
+        //ορίζουμε λοιπόν μια ημερομηνία τυχαία που θέλουμε betw
         Date betw;
-        calendar.set(2017, 11, 25);//παρομοίος
-        betw=calendar.getTime();//παρομοίος
-        System.out.println(hotel.Search_code("5"));//δουλευει
+        calendar.set(2017, 11, 25);//παρομοίως
+        betw=calendar.getTime();//παρομοίως
+        
+        //και τρέχουμε με κάποιες προκαθορισμένες τιμές ενδεικτικά όλες τις συναρτήσεις που μας ζητείται να φτιάξουμε 
+        //για να δείξουμε ότι πράγματι δουλεύουν με ότι τιμή και να δώσουμε!
+        System.out.println(hotel.Search_code("5"));
         
         System.out.println("\nReservations:");
         for(Reservation reservation:hotel.Search_date(betw))
@@ -87,12 +97,12 @@ public class Tester {
             System.out.println();
         }
         System.out.println("End of reservations!!!");
-        System.out.println(hotel.Search_name("Tom"));//δουλευει
-        hotel.Delete_reservation("2");//δουλευει
-        hotel.UniqueTypes(betw);//δουλευει
-        hotel.TypeCount(betw);//δουλευει
-        hotel.countPrice(betw); //!!!!εχει θέμα δεν μπορεί να διαβάσει και να υπολογίσει ΜΕ ΟΧΗΜΑΤΑ λεφτά!!!! 
-        //τα άλλα τα μετράει νομίζω απλα μετράει μια μέρα λιγότερη, πχ απο 20-25 είναι 5 μέρες και όχι 6! αυτο μόνο
+        
+        System.out.println(hotel.Search_name("Tom"));
+        hotel.Delete_reservation("2");
+        hotel.UniqueTypes(betw);
+        hotel.TypeCount(betw);
+        hotel.countPrice(betw);
     }
 
 }
