@@ -1,3 +1,5 @@
+//icsd15107 Λιάρος Θωμάς
+//icsd15137 Μπαντόλας Μάριος
 package java_project;
 public class Single_Room extends Room
 {

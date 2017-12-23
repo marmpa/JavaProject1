@@ -1,3 +1,5 @@
+//icsd15107 Λιάρος Θωμάς
+//icsd15137 Μπαντόλας Μάριος
 package java_project;
 
 import com.sun.javafx.scene.control.skin.VirtualFlow;
