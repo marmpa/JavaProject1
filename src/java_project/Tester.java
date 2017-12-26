@@ -88,18 +88,18 @@ public class Tester {
         
         //και τρέχουμε με κάποιες προκαθορισμένες τιμές ενδεικτικά όλες τις συναρτήσεις που μας ζητείται να φτιάξουμε 
         //για να δείξουμε ότι πράγματι δουλεύουν με ότι τιμή και να δώσουμε!
-        System.out.println(hotel.Search_code("5"));
+        System.out.println(hotel.Search_code("5","Greg"));
         
         System.out.println("\nReservations:");
-        for(Reservation reservation:hotel.Search_date(betw))
+        for(Reservation reservation:hotel.Search_date(betw,"Greg"))
         {
             System.out.println(reservation);
             System.out.println();
         }
         System.out.println("End of reservations!!!");
         
-        System.out.println(hotel.Search_name("Tom"));
-        hotel.Delete_reservation("2");
+        System.out.println(hotel.Search_name("Tom","Tom"));
+        hotel.Delete_reservation("2","Marios");
         hotel.UniqueTypes(betw);
         hotel.TypeCount(betw);
         hotel.countPrice(betw);

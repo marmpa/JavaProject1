@@ -130,7 +130,7 @@ public class Hotel {
        }
     }
 
-    public Reservation Search_code(String reserve_ID) {
+    public Reservation Search_code(String reserve_ID,String Username) {
         Reservation temp_reserve = new Reservation();
 
         
@@ -154,8 +154,9 @@ public class Hotel {
                     Reservation tempReservation = ((Reservation) tempMapEntry2.getValue());//μετατρέπει tempMapEntry2.getValue 
                     //σε Reservation για να πάρει το ID του
 
-                    if (tempReservation.getID().equals(reserve_ID))
-                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
+                    if (tempReservation.getID().equals(reserve_ID)&&tempReservation.getName().equalsIgnoreCase(Username))
+                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation και ο χρήστης είναι ο ίδιος με
+                     //που έκανε την κράτηση τότε μπορεί να συνεχίσει
                        
                         temp_reserve = tempReservation; //θέτει την temp_reserve με την κράτηση που γίνεται το iterate αυτή τη στιγμή
                         return temp_reserve;
@@ -167,7 +168,7 @@ public class Hotel {
         return temp_reserve;//επιστρέφει την κράτηση
     }
 
-    public Reservation Search_name(String reserve_Name) 
+    public Reservation Search_name(String reserve_Name,String Username) 
     {
         Reservation temp_reserve = new Reservation();
 
@@ -190,8 +191,9 @@ public class Hotel {
                     Reservation tempReservation = ((Reservation) tempMapEntry2.getValue());//μετατρέπει tempMapEntry2.getValue 
                     //σε Reservation για να πάρει το ID του
 
-                    if (tempReservation.getName().equals(reserve_Name)) 
-                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
+                    if (tempReservation.getName().equals(reserve_Name)&&tempReservation.getName().equalsIgnoreCase(Username)) 
+                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation και ο χρήστης είναι ο ίδιος με
+                     //που έκανε την κράτηση τότε μπορεί να συνεχίσει
                         
                         temp_reserve = tempReservation; //θέτει την temp_reserve με την κράτηση που γίνεται το iterate αυτή τη στιγμή
 
@@ -205,7 +207,7 @@ public class Hotel {
     }
 
     
-    public List<Reservation> Search_date(Date search_date) 
+    public List<Reservation> Search_date(Date search_date,String Username) 
     {
         List<Reservation> temp_reserve = new ArrayList<Reservation>();
         
@@ -231,8 +233,9 @@ public class Hotel {
                     //σε Reservation για να πάρει το ID του
                     
                     
-                    if (tempReservation.Contains(search_date))
-                    {//Εαν η ημερομηνία που έδωσε ο χρήστης περιέχεται σε κάποια κράτηση
+                    if (tempReservation.Contains(search_date)&&tempReservation.getName().equalsIgnoreCase(Username))
+                    {//Εαν η ημερομηνία που έδωσε ο χρήστης περιέχεται σε κάποια κράτηση και ο χρήστης είναι ο ίδιος με
+                     //που έκανε την κράτηση τότε μπορεί να συνεχίσει
                        
                         temp_reserve.add(tempReservation); //θέτει την temp_reserve με την κράτηση που γίνεται το iterate αυτή τη στιγμή
                     }
@@ -244,7 +247,7 @@ public class Hotel {
     }
     
     
-    public void Delete_reservation(String reserve_ID) 
+    public void Delete_reservation(String reserve_ID,String Username) 
     {//Δειαγράφη μία κράτηση
         Reservation temp_reserve = new Reservation();
 
@@ -268,8 +271,9 @@ public class Hotel {
                     Reservation tempReservation = ((Reservation) tempMapEntry2.getValue());//μετατρέπει tempMapEntry2.getValue 
                     //σε Reservation για να πάρει το ID του
 
-                    if (tempReservation.getID().equals(reserve_ID)) 
-                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation
+                    if (tempReservation.getID().equals(reserve_ID)&&tempReservation.getName().equalsIgnoreCase(Username)) 
+                    {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation και ο χρήστης είναι ο ίδιος με
+                     //που έκανε την κράτηση τότε μπορεί να συνεχίσει
                        
                        tempTreeMap.remove(tempReservation.getStart_date());//αφερεί μια εγραφή απο το treeMap
                        //tempTreeMap.get(tempReservation.getStart_date());
