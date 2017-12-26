@@ -42,6 +42,8 @@ public class Reservation
         typeNamingScheme.put("Buggy", "Gourouna");
         typeNamingScheme.put("Car", "Autokinito");
         typeNamingScheme.put("Motorbike", "Mixanaki");
+        typeNamingScheme.put("Hall", "Aithousa Ekdiloseon");
+        
     }
         
         
