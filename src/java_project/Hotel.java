@@ -22,7 +22,7 @@ public class Hotel {
     String hName;
     String hLocation;
     int hRating;
-    Reserve hReservations;
+    public Reserve hReservations;
     HashMap<String,String> typeNamingScheme;
     
 
@@ -289,6 +289,49 @@ public class Hotel {
     
     public void UniqueTypes(Date occupied_date)
     {
+        HashSet<String> typeHashSet = new HashSet<>();//Δημιουργώ ένα νέο αντικείμενο τύπου Hashset για να αποθηκεύσω μοναδικά string
+        
+        for (Object tempHashMap : hReservations.reserveList) 
+        {
+            Set tempEntrySet = ((HashMap) tempHashMap).entrySet();//Μετατρέπει σε set ώστε να μπορέσει να διαβαστεί μετά
+
+            Iterator tempIterator = tempEntrySet.iterator();//Φτιάχνει αντικείμενο iterator ώστε να μπορεί να γίνει προσπέλαση με 
+            //το while loop παρακάτω
+
+            while (tempIterator.hasNext()) 
+            {//ώσο υπάρχει επόμενη εγραφή στο iterator
+                Map.Entry tempMapEntry = (Map.Entry) tempIterator.next();//Κάνει cast σε Map.Entry ώστε να έχω πρόσβαση στο key και value 
+                //του HashMap
+
+                TreeMap tempTreeMap = (TreeMap) tempMapEntry.getValue();//Μετατρέπει το tempMapEntry.getValue σε αντικείμενο
+                //τύπου treeMap ώστε να μπορώ να έχω πρόσβαση στα αντικείμενα του
+                
+                Map.Entry<Date, Reservation> entry = tempTreeMap.floorEntry(occupied_date);//Περνει το entry που βρήσκεται στο floorEntry
+                if (entry != null) 
+                {//εαν βρήκε κάποιο entry
+                    Reservation tempReservation = entry.getValue();//Πέρνει το Value του entry
+                    
+                    if (tempReservation.Contains(occupied_date)) 
+                    {//εαν η μέρα που δώθηκε περιέχεται στην κράτηση
+                        typeHashSet.add(tempReservation.GetRented().getClass().getSimpleName());//Προσθέτω το όνομα της κλάσης στο πίνακα
+                        //μονο μια φορά καθώς είναι hashset
+                        
+                    }
+                }
+                
+            }
+        }
+        
+        System.out.println("Periexei: ");
+        
+        for(String tempWord: typeHashSet)
+        {
+            System.out.println(typeNamingScheme.get(tempWord));
+        }
+    }
+    
+    public HashSet<String> UniqueTypes()
+    {//Αυτή η κλάση επιστρέφει όλους τους τύπους δωματίων που υπάρχουν στο ξενοδοχείο
         HashSet<String> typeHashSet = new HashSet<>();//Δημιουργώ ένα νέο αντικείμενο τύπου Hashset για να αποθηκεύσω μοναδικά string
         
         for (Object tempHashMap : hReservations.reserveList) 
