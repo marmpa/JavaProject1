@@ -93,7 +93,7 @@ public class Reservation
     {
         double cost=0;
         long difference = this.finish_date.getTime() - this.start_date.getTime();//παίρνουμε την διαφορά μεταξύ τους σε milliseconds
-        float daysBetween = (difference / (1000*60*60*24));//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
+        float daysBetween = (difference / (1000*60*60*24))+1;//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
         try 
         {
             String methodName = "getPrice";//Αποθηκεύω σε μία μεταβλητή το όνομα της μεθόδου που θέλω να καλέσω
@@ -101,6 +101,36 @@ public class Reservation
             //rented ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
             
             cost = daysBetween * (double) objectMethod.invoke(rented, null);// δημιουργώ το κόστος το οποίο υπολογίζεται με βάση το γινόμενο
+            //του αριθμό των ημερών οι οποίες ενοικιάζεται το αντικείμενο και το αποτέλεσμα της κλήσης της μεθόδου που δημιούργησα παραπάνω
+            //αφού μετατραπεί σε double τύπο
+            
+            
+            
+        } catch (NoSuchMethodException ex) {//διάφορα catch τα οποία χρειάζονται για να μην πετάει error το παραπάνω
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cost;
+    }
+    public static Double CostBeforeReservation(Date start_date,Date finish_date,Object room_car_type)
+    {
+        double cost=0;
+        long difference = finish_date.getTime() - start_date.getTime();//παίρνουμε την διαφορά μεταξύ τους σε milliseconds
+        float daysBetween = (difference / (1000*60*60*24))+1;//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
+        try 
+        {
+            String methodName = "getPrice";//Αποθηκεύω σε μία μεταβλητή το όνομα της μεθόδου που θέλω να καλέσω
+            Method objectMethod = room_car_type.getClass().getMethod(methodName, null);//απθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
+            //rented ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
+            
+            cost = daysBetween * (double) objectMethod.invoke(room_car_type, null);// δημιουργώ το κόστος το οποίο υπολογίζεται με βάση το γινόμενο
             //του αριθμό των ημερών οι οποίες ενοικιάζεται το αντικείμενο και το αποτέλεσμα της κλήσης της μεθόδου που δημιούργησα παραπάνω
             //αφού μετατραπεί σε double τύπο
             

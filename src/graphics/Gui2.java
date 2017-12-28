@@ -22,7 +22,7 @@ import java_project.Room;
 import java_project.Single_Room;
 import java_project.Triple_Room;
 
-public class Gui extends JFrame
+public class Gui2 extends JFrame
 {
     public final int windowWidth = 800;
     public final int windowHeight = 800;
@@ -32,7 +32,7 @@ public class Gui extends JFrame
     private Container guiPane;
     
     private String currentName;
-    public Gui(java_project.Hotel hotel)
+    public Gui2(java_project.Hotel hotel)
     {
         super("Ξενοδοχείο Αιγαίο");//δηλώνω τίτλο στο παράθυρο που θα δημιουργηθεί
         this.hotel=hotel;//Αναφορά στο ξενοδοχείο

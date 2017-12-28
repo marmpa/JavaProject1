@@ -3,6 +3,8 @@
 package java_project;
 
 import com.sun.javafx.scene.control.skin.VirtualFlow;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,7 +13,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Reserve {
 
@@ -20,11 +25,12 @@ public class Reserve {
     
     
     public List reserveList;
-    
+    public HashMap<String,Object> rentalsList;
         
     public Reserve() 
     {
         reserveList = new ArrayList();
+        rentalsList = new HashMap<>();
         
         reserveList.add(new HashMap<Room,TreeMap<Date,Reservation>>());
         reserveList.add(new HashMap<Car,TreeMap<Date,Reservation>>());
@@ -32,7 +38,26 @@ public class Reserve {
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");
     }
     
-    public void Add(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
+    public void AddRoom(Object room_car_type)
+    {
+        for(Object objectType:reserveList)
+        {
+            try
+            {
+                HashMap tempHashMap = (HashMap) objectType;
+                tempHashMap.put(room_car_type, new TreeMap<Date, Reservation>());//Βάζει ένα νέο
+                this.rentalsList.put(getObjectID(room_car_type),room_car_type);//Αντιστοιχό το id σε αντικείμενο
+                return;
+            }
+            catch(Exception e)
+            {
+                System.out.println("Edoses lathos tipou antikeimeno: "+room_car_type.getClass().getSimpleName());
+            }
+            
+        }
+    }
+    
+    public boolean Add(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
     {
         Reservation tempReservation = new Reservation(reserve_ID, reserve_Name, start_date, finish_date,room_car_type);//Φτιάχνει μια νέα κράτηση
         
@@ -47,16 +72,20 @@ public class Reserve {
                 
                 if(tempHashMap.get(room_car_type) == null)
                 {//Τσεκάρει αν υπάρχει το δωμάτιο στο ξενοδοχείο
-                   tempHashMap.put(room_car_type, new TreeMap<Date,Reservation>());
+                   AddRoom(room_car_type);
                     //System.out.println("Natos o paiktis ksexnaei ta antikeimena seira 49 reserve");
                 }
                 
                  if(Available(start_date, finish_date,room_car_type))
                  {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
                      
+                     
+                        System.out.println("Yes bike to "+reserve_ID);
+                    
+                     
                      ((TreeMap) tempHashMap.get(room_car_type)).putIfAbsent(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
                      //αφού την κάνει cast σε TreeMap
-                     return;
+                     return true;//Εαν καταφέρει να το βάλει στη
                  }
             }
             catch(Exception e)
@@ -65,7 +94,7 @@ public class Reserve {
             }
             
         }
-        
+        return false;//Εάν δεν μπορέσει να το βάλει στη λίστα
     }
     
     //ΠΡΟΣΟΧΗΗΗΗ ! -- Προς το παρόν δεν Χρειάζεται το παρακάτω!!!!!!!!!!!!!!!!!!!!!
@@ -142,7 +171,40 @@ public class Reserve {
         return true;//Επιστρέφει αληθές αν ποτέ μέσα στο Loop δεν βρείκε εμπλεκόμενη ημερομηνία
     }
     
+    public String getObjectID(Object room_car_type)
+    {//Γυρνάει το ID του αντικειμένου
+        String objectID = "0";
+        try
+        {
+            String methodName = "getID";
+            Method objectMethod = room_car_type.getClass().getMethod(methodName, null);//Παίρνει την μέθοδο με όνομα getID
+            //ώστε να μπορώ να την καλώ κοινά και για τα δωμάτια και για τα αυτοκίνητα
+            
+            objectID = (String) objectMethod.invoke(room_car_type,null);//καλώ την μέθοδο απου αντιστοιχή στο αυτοκίνητο
+            //και κάνω cast το αποτέλεσμα σε String
+        } catch (NoSuchMethodException ex) {//exception για να ελένχω τα λάθοι
+            Logger.getLogger(Reserve.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Reserve.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Reserve.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Reserve.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Reserve.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return objectID;
+    }
     
+    public String randomReservationIdGenarator()
+    {//επιστρέφει ένα τυχαίο string
+        Random randomGenerator = new Random();//Δημιουργεί ένα νέο αντικείμενο Random το οποίο θα χρησιμοποιηθεί για να βρεί τυχαίους
+        //αριθμούς
+        String generatedNumberToString = Integer.toString(randomGenerator.nextInt(90000)+10000);//Παράγει το τυχαίο αριθμό και το μετατρέπει
+        //σε string
+        
+        return generatedNumberToString;//Επιστρέφει το String
+    }
 
     
 }

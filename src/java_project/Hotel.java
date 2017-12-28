@@ -61,29 +61,19 @@ public class Hotel {
         typeNamingScheme.put("Buggy", "Gourouna");
         typeNamingScheme.put("Car", "Autokinito");
         typeNamingScheme.put("Motorbike", "Mixanaki");
-
+        typeNamingScheme.put("Hall", "Aithousa Ekdiloseon");
     }
 
-    public void Add(Object room_car_type) {//προσθέτει νεα κράτηση
-       for(Object reservationType:hReservations.reserveList)
-       {
-           try
-           {
-               HashMap tempHashMap = (HashMap) reservationType;//Μετατρέπει σε HashMap
-               tempHashMap.put(room_car_type, new TreeMap<Date, Reservation>());//Βάζει ένα νέο
-               
-               return;
-           }
-           catch(Exception e)
-           {
-               System.out.println("Edoses lathos tipou antikeimeno: "+room_car_type.getClass().getSimpleName());
-           }
-       }
+    public void Add(Object room_car_type) 
+    {//προσθέτει νεo αντικείμενο
+       this.hReservations.AddRoom(room_car_type);
     }
     
-    public void NewReservation(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
+    public boolean NewReservation(String reserve_ID,String reserve_Name,Date start_date,Date finish_date,Object room_car_type)
     {//Προσθέτω μια νέα κράτηση στην λίστα
-        this.hReservations.Add(reserve_ID, reserve_Name, start_date, finish_date, room_car_type);
+        return this.hReservations.Add(reserve_ID, reserve_Name, start_date, finish_date, room_car_type);
+        
+        
     }
     
     public void Delete(String reservetion_id)
@@ -330,9 +320,9 @@ public class Hotel {
         }
     }
     
-    public HashSet<String> UniqueTypes()
-    {//Αυτή η κλάση επιστρέφει όλους τους τύπους δωματίων που υπάρχουν στο ξενοδοχείο
-        HashSet<String> typeHashSet = new HashSet<>();//Δημιουργώ ένα νέο αντικείμενο τύπου Hashset για να αποθηκεύσω μοναδικά string
+    public List<String> ItemIDs(String reservationItemName)
+    {//Αυτή η κλάση επιστρέφει ολα τα δωμάτια η αυτοκίνητα τα οποία έχουνε ένα συγκεκριμένο όνομα 
+        List<String> typeList = new ArrayList<>();//Δημιουργώ ένα νέο αντικείμενο τύπου Hashset για να αποθηκεύσω μοναδικά string
         
         for (Object tempHashMap : hReservations.reserveList) 
         {
@@ -343,34 +333,40 @@ public class Hotel {
 
             while (tempIterator.hasNext()) 
             {//ώσο υπάρχει επόμενη εγραφή στο iterator
-                Map.Entry tempMapEntry = (Map.Entry) tempIterator.next();//Κάνει cast σε Map.Entry ώστε να έχω πρόσβαση στο key και value 
+                Map.Entry tempObjectEntry = (Map.Entry) tempIterator.next();//Κάνει cast σε Map.Entry ώστε να έχω πρόσβαση στο key και value 
                 //του HashMap
-
-                TreeMap tempTreeMap = (TreeMap) tempMapEntry.getValue();//Μετατρέπει το tempMapEntry.getValue σε αντικείμενο
-                //τύπου treeMap ώστε να μπορώ να έχω πρόσβαση στα αντικείμενα του
                 
-                Map.Entry<Date, Reservation> entry = tempTreeMap.floorEntry(occupied_date);//Περνει το entry που βρήσκεται στο floorEntry
-                if (entry != null) 
-                {//εαν βρήκε κάποιο entry
-                    Reservation tempReservation = entry.getValue();//Πέρνει το Value του entry
-                    
-                    if (tempReservation.Contains(occupied_date)) 
-                    {//εαν η μέρα που δώθηκε περιέχεται στην κράτηση
-                        typeHashSet.add(tempReservation.GetRented().getClass().getSimpleName());//Προσθέτω το όνομα της κλάσης στο πίνακα
-                        //μονο μια φορά καθώς είναι hashset
+                if(typeNamingScheme.get(tempObjectEntry.getKey().getClass().getSimpleName()).equalsIgnoreCase(reservationItemName))
+                {// παίρνει το απλο όνομα της κλάσης του κλειδιού του Map.Entry που φτιάχτηκε παραπάνω και το τροφοδοτεί στη
+                    //typeNamingScheme για να πάρει το άλλο όνομα της κλάσεις ώστε να το συγκρίνει με αυτό που δόθηκε
+                    try
+                    {
+                        String methodName = "getID";//Αποθηκεύω σε μία μεταβλητή το όνομα της μεθόδου που θέλω να καλέσω
+                        Method objectMethod = tempObjectEntry.getKey().getClass().getMethod(methodName, null);//απoθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
+                        //tempObjectEntry ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
+            
+                        typeList.add((String) objectMethod.invoke(tempObjectEntry.getKey(), null));//Αφού καλέσει τη μέθοδο getID με
+                        //reflection θα την μετατρέψει σε string και θα την βάλει μέσα στη λίστα
                         
+                    } catch (NoSuchMethodException ex) {
+                        Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SecurityException ex) {
+                        Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalAccessException ex) {
+                        Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalArgumentException ex) {
+                        Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvocationTargetException ex) {
+                        Logger.getLogger(Hotel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                
+                
                 
             }
         }
         
-        System.out.println("Periexei: ");
-        
-        for(String tempWord: typeHashSet)
-        {
-            System.out.println(typeNamingScheme.get(tempWord));
-        }
+        return typeList;//Επιστρέφει την λίστα που φτίαξαμε παραπάνω
     }
     
     public void TypeCount(Date occupied_date)
