@@ -182,18 +182,24 @@ public class Gui extends JFrame
                         int userOption=-1;
                         if(hotel.hReservations.Available(from_Date, to_Date, hotel.hReservations.rentalsList.get(ID_String)))
                         {//Εάν το μπήκε το η κράτηση μέσα στο Reservation
-                            userOption=JOptionPane.showConfirmDialog(submit_JButton, 
+                            userOption=JOptionPane.showConfirmDialog(getContentPane(), 
                                     "Θέλεται να κάνεται την κράτηση?\n Θα κοστίσει: "+java_project.Reservation.CostBeforeReservation(from_Date, to_Date, hotel.hReservations.rentalsList.get(ID_String))+"\u20ac"
                                     ,"",JOptionPane.YES_NO_OPTION);
+                            if(userOption==0)
+                            {//Εάν πάτησε ναί
+                            
+                                hotel.hReservations.Add(hotel.hReservations.randomReservationIdGenarator(), currentName, from_Date, to_Date, hotel.hReservations.rentalsList.get(ID_String));
+                            }
+                            
+                            
                         }
-                        if(userOption==0)
-                        {//Εάν πάτησε ναί
-                            Room tempRoomShouldDelete = new Triple_Room("456", 30.0, false);
-                            hotel.hReservations.Add(hotel.hReservations.randomReservationIdGenarator(), currentName, from_Date, to_Date, tempRoomShouldDelete);
+                        else
+                        {
+                            JOptionPane.showMessageDialog(getContentPane(),"Είναι κρατήμένο το "+ID_String);
                         }
                         
                     } catch (ParseException ex) {
-                        Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+                        
                     } catch(NullPointerException ex)
                     {
                         
