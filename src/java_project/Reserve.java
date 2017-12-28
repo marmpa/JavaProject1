@@ -2,7 +2,7 @@
 //icsd15137 Μπαντόλας Μάριος
 package java_project;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
