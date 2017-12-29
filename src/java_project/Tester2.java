@@ -77,6 +77,8 @@ public class Tester2
         
         hotel.NewReservation("2", "Giota", from, to, rooms.get(0));
         
+        System.out.println(hotel.hReservations.Available(from, from, rooms.get(0)));
+        
         calendar.set(2017, 11, 18);//παρομοίως
         from = calendar.getTime();//παρομοίως
         calendar.set(2017, 11, 25);//παρομοίως
@@ -116,12 +118,15 @@ public class Tester2
         System.out.println("End of reservations!!!");
         
         System.out.println(hotel.Search_name("Tom","Tom"));
-        hotel.Delete_reservation("2","Marios");
+        hotel.Delete_reservation("2","MArios");
         hotel.UniqueTypes(betw);
         hotel.TypeCount(betw);
         hotel.countPrice(betw);
         
         //hotel.UniqueTypes("Yes");
+        
+       
+       
         
         Gui a = new Gui(hotel);
     }
@@ -213,7 +218,7 @@ public class Tester2
         System.out.println("End of reservations!!!");
         
         System.out.println(hotel.Search_name("Tom","Tom"));
-        hotel.Delete_reservation("2","Marios");
+        hotel.Delete_reservation("2","MaRiOs");
         hotel.UniqueTypes(betw);
         hotel.TypeCount(betw);
         hotel.countPrice(betw);

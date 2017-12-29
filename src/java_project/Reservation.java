@@ -5,6 +5,8 @@ package java_project;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
@@ -27,10 +29,10 @@ public class Reservation
     
     public Reservation()
     {
-        this.reservation_ID="none";
+        this.reservation_ID=null;
         this.start_date=null;
         this.finish_date=null;
-        this.reservation_Name="none";
+        this.reservation_Name=null;
         dateFormat = new SimpleDateFormat("dd/MM/YYYY");//Θέτω το πώς θα φορματάρω την ημερομηνία για εκτύπωση
         
         typeNamingScheme = new HashMap<>();//Ενα HashMap για ονόματα των ενοικιαζομένων
@@ -72,7 +74,14 @@ public class Reservation
     
     public boolean Contains(Date date)
     {
-        return !(start_date.after(date)||finish_date.before(date));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
+        LocalDate tempStart_date,tempfinish_date,tempDate;
+        
+        tempStart_date = this.start_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        tempfinish_date = this.finish_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        tempDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        //return !(start_date.after(date)||finish_date.before(date));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
+        return !(tempStart_date.isAfter(tempDate)||tempfinish_date.isBefore(tempDate));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
     }
     
      public String getID()
@@ -172,11 +181,30 @@ public class Reservation
         String tempString;
         try
         {
-        tempString = "\nKratisi gia: "+typeNamingScheme.get(this.rented.getClass().getSimpleName())
-                    +"\nId kratisis: "+this.reservation_ID
-                    +"\nOnoma katoxou kratisis: "+this.reservation_Name
+        tempString = "\nΚράτηση: "+typeNamingScheme.get(this.rented.getClass().getSimpleName())
+                    +"\nId κράτησης: "+this.reservation_ID
+                    +"\nΌνομα κατόχου κράτησης: "+this.reservation_Name
                     +"\nEinai apo tis "+dateFormat.format(this.start_date)
                     +" mexri tis "+dateFormat.format(this.finish_date);
+        }
+        catch(Exception e)
+        {
+            tempString="none";
+        }
+        return tempString;
+    }
+    
+    public String toString(boolean noNeed)
+    {
+        String tempString;
+        try
+        {
+        tempString = "<html>Κράτηση: "+typeNamingScheme.get(this.rented.getClass().getSimpleName())
+                    +"<br/>Id κράτησης: "+this.reservation_ID
+                    +"<br/>Όνομα κατόχου κράτησης: "+this.reservation_Name
+                    +"<br/>Einai apo tis "+dateFormat.format(this.start_date)
+                    +" mexri tis "+dateFormat.format(this.finish_date)
+                    +"</html>";
         }
         catch(Exception e)
         {

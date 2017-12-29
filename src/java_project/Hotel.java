@@ -120,7 +120,9 @@ public class Hotel {
        }
     }
 
-    public Reservation Search_code(String reserve_ID,String Username) {
+    public Reservation Search_code(String reserve_ID,String Username) 
+    {
+        
         Reservation temp_reserve = new Reservation();
 
         
@@ -237,8 +239,8 @@ public class Hotel {
     }
     
     
-    public void Delete_reservation(String reserve_ID,String Username) 
-    {//Δειαγράφη μία κράτηση
+    public boolean Delete_reservation(String reserve_ID,String userName) 
+    {//Διαγράφη μία κράτηση
         Reservation temp_reserve = new Reservation();
 
         for (Object tempHashMap : hReservations.reserveList) 
@@ -261,20 +263,19 @@ public class Hotel {
                     Reservation tempReservation = ((Reservation) tempMapEntry2.getValue());//μετατρέπει tempMapEntry2.getValue 
                     //σε Reservation για να πάρει το ID του
 
-                    if (tempReservation.getID().equals(reserve_ID)&&tempReservation.getName().equalsIgnoreCase(Username)) 
+                    if (tempReservation.getID().equals(reserve_ID)&&tempReservation.getName().equalsIgnoreCase(userName)) 
                     {//Εαν το ID τις κράτης που δώθηκε ο χρήστης ισούτε με αυτό στην tempReservation και ο χρήστης είναι ο ίδιος με
                      //που έκανε την κράτηση τότε μπορεί να συνεχίσει
-                       
                        tempTreeMap.remove(tempReservation.getStart_date());//αφερεί μια εγραφή απο το treeMap
                        //tempTreeMap.get(tempReservation.getStart_date());
-                       return;
+                       return true;
                     }
                 }
 
             }
 
         }
-
+       return false;
     }
     
     public void UniqueTypes(Date occupied_date)

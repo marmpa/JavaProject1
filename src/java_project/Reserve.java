@@ -6,6 +6,7 @@ package java_project;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,7 +81,7 @@ public class Reserve {
                  {//Εάν το δωμάτιο είναι ελεύθερο όλες τις μέρες που θέλουμε
                      
                      
-                        System.out.println("Yes bike to "+reserve_ID);
+                        System.out.println("Yes bike to "+reserve_ID + " seira 83 στην Reserve στην Add");
                     
                      
                      ((TreeMap) tempHashMap.get(room_car_type)).putIfAbsent(start_date, tempReservation);//Βάζει την κράτηση μέσα στον πίνακα για να μπορεί να ελενχθεί
@@ -149,16 +150,34 @@ public class Reserve {
                     if(entry!=null)
                     {//Εάν δεν βρήκε τπτ το floorEntry σημαίνει πως δεν υπάρχει κράτηση πριν την συγκεκριμένη μέρα
                         Reservation tempReservation = entry.getValue();//παίρνουμε την κράτηση και την αποθηκεύουμαι σε μία μεταβλητή
-                            
+                         
                         if(tempReservation.Contains(tempDate))
                         {//Εάν η κράτηση περιέχει την ημερομηνία που δώσαμε επιστρέφουμαι false
                             
                             return false;
                         }
                     }
+                    else
+                    {
+                        LocalDate tempDateFromEntry,tempDay;
+                        entry = ((TreeMap) tempHashMap.get(room_car_type)).ceilingEntry(tempDate);
+                        if(entry!=null)
+                        {
+                            Reservation tempReservation = entry.getValue();//παίρνουμε την κράτηση και την αποθηκεύουμαι σε μία μεταβλητή
+                            if(tempReservation.Contains(tempDate))
+                            {//Εάν η κράτηση περιέχει την ημερομηνία που δώσαμε επιστρέφουμαι false
+                            
+                                return false;
+                            }
+                        }
+                        
+                        
+                    }
                     
                     tempCal.add(Calendar.DATE,1);//Προσθέτει 1 ημερολογιακή μέρα στην είδη υπάρχοντα μέρα
                     tempDate=tempCal.getTime();//Μετατρέπει το calendar σε date 
+                    
+                    
                 }
                 while(tempDate.compareTo(finish_date)<=0);//Ώσο η tempDate είναι μικρότερη η ίση με την finish_date
             }
