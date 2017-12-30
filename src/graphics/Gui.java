@@ -543,6 +543,7 @@ public class Gui extends JFrame
         JTable mainTable_JTable;
         List<String> Dates_String;
         List<ArrayList<String>> listEntrys_String;
+        JScrollPane mainPane_JScrollPane;
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
@@ -560,7 +561,7 @@ public class Gui extends JFrame
         
         
         
-        SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/mm/yy");
+        SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");
         
         long difference = to_Date.getTime() - from_Date.getTime();//παίρνουμε την διαφορά μεταξύ τους σε milliseconds
         long daysBetween = (difference / (1000*60*60*24));//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
@@ -571,21 +572,20 @@ public class Gui extends JFrame
         tempCal.setTime(from_Date);
         Date tempDate = tempCal.getTime();
         
+        Dates_String.add("Ενοικιαζόμενα");
         
         
-        for(tempDate=tempCal.getTime();!tempDate.after(to_Date);tempCal.add(Calendar.DATE,1),tempDate=tempCal.getTime())
+        boolean ifFirstTry=true;
+        
+        
+        for(Map.Entry<String,Object> mapObject: hotel.hReservations.rentalsList.entrySet())
         {
-            
-            
-            Dates_String.add(tempDateFormat.format(tempDate));
-            
-            
             ArrayList<String> tempReservationCheckList_String = new ArrayList<>();
+            tempCal.setTime(from_Date);
             
-            boolean ifFirstTry=true;
-            for(Map.Entry<String,Object> mapObject: hotel.hReservations.rentalsList.entrySet())
+            for(tempDate=tempCal.getTime();!tempDate.after(to_Date);tempCal.add(Calendar.DATE,1),tempDate=tempCal.getTime())
             {
-                if(ifFirstTry)
+                if(tempDate.equals(from_Date))
                 {
                     try
                     {
@@ -603,10 +603,16 @@ public class Gui extends JFrame
                     } catch (InvocationTargetException ex) {
                         Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    ifFirstTry=false;
                 }
-                else
+                if(ifFirstTry)
                 {
+                    
+                    
+                    Dates_String.add(tempDateFormat.format(tempDate));
+//                   
+                    
+                }
+                
                     if(hotel.hReservations.Available(tempDate, tempDate, mapObject.getValue()))
                     {
                     
@@ -616,9 +622,10 @@ public class Gui extends JFrame
                     {
                         tempReservationCheckList_String.add("No"); 
                     }
-                }
+                
                 
             }
+            ifFirstTry=false;
             listEntrys_String.add(tempReservationCheckList_String);
         }
         
@@ -629,9 +636,16 @@ public class Gui extends JFrame
             ArrayList<String> row = listEntrys_String.get(i);
             tempArrayForValues[i] = row.toArray(new String[row.size()]);
         }
-        
+        System.out.println(tempArrayForValues.length+" to allo "+tempArrayForValues[2].length);
+        System.out.println(Dates_String.toArray()[1]+" ;)");
         mainTable_JTable = new JTable(tempArrayForValues,Dates_String.toArray());
-        this.guiPane.add(mainTable_JTable);
+        mainTable_JTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        mainTable_JTable.setPreferredScrollableViewportSize(new Dimension(450, 400));
+        //mainTable_JTable.setBounds(30, 40, 200, 300);
+        //mainTable_JTable.setPreferredScrollableViewportSize(new Dimension(200,300));
+        
+        mainPane_JScrollPane = new JScrollPane(mainTable_JTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.guiPane.add(mainPane_JScrollPane);
         
 //        for(JLabel tempJLabel:Dates_JLabels)
 //        {
