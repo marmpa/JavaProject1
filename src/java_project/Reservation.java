@@ -212,4 +212,23 @@ public class Reservation
         }
         return tempString;
     }
+    
+    public String toFile()
+    {
+        String tempString;
+        try
+        {
+        
+        tempString = this.reservation_ID+", "
+                + this.reservation_Name+", "
+                + this.dateFormat.format(this.start_date)+", "
+                + this.dateFormat.format(this.finish_date)+", "
+                + typeNamingScheme.get(this.rented.getClass().getSimpleName())+ " ";
+        }
+        catch(Exception e)
+        {
+            tempString="none";
+        }
+        return tempString;
+    }
 }

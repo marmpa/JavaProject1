@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -154,6 +157,16 @@ public class Gui extends JFrame
             public void actionPerformed(ActionEvent e)
             {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για καινούργια κράτηση
                 RentalsAvailabilityDatesPopup();
+            }
+        } 
+        );
+        
+        option5_JButton.addActionListener(
+        new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για καινούργια κράτηση
+                AdvancedMenu();
             }
         } 
         );
@@ -543,12 +556,13 @@ public class Gui extends JFrame
         JTable mainTable_JTable;
         List<String> Dates_String;
         List<ArrayList<String>> listEntrys_String;
+        JButton back_JButton;
         JScrollPane mainPane_JScrollPane;
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
         this.guiPane = this.getContentPane();
-        GridLayout NewReservation_GridLayout = new GridLayout(3,4);
+        GridLayout NewReservation_GridLayout = new GridLayout(2,1);
         //this.guiPane.setLayout(NewReservation_GridLayout);
         //.......................................
         
@@ -556,10 +570,7 @@ public class Gui extends JFrame
         Dates_String = new ArrayList<>();
         listEntrys_String = new ArrayList<>();
         
-        
-        
-        
-        
+        back_JButton = NewBackButton();
         
         SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");
         
@@ -606,24 +617,17 @@ public class Gui extends JFrame
                 }
                 if(ifFirstTry)
                 {
-                    
-                    
                     Dates_String.add(tempDateFormat.format(tempDate));
-//                   
-                    
                 }
                 
                     if(hotel.hReservations.Available(tempDate, tempDate, mapObject.getValue()))
                     {
-                    
                         tempReservationCheckList_String.add("Ok");
                     }
                     else
                     {
                         tempReservationCheckList_String.add("No"); 
                     }
-                
-                
             }
             ifFirstTry=false;
             listEntrys_String.add(tempReservationCheckList_String);
@@ -636,39 +640,56 @@ public class Gui extends JFrame
             ArrayList<String> row = listEntrys_String.get(i);
             tempArrayForValues[i] = row.toArray(new String[row.size()]);
         }
-        System.out.println(tempArrayForValues.length+" to allo "+tempArrayForValues[2].length);
-        System.out.println(Dates_String.toArray()[1]+" ;)");
+        
         mainTable_JTable = new JTable(tempArrayForValues,Dates_String.toArray());
         mainTable_JTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        mainTable_JTable.setPreferredScrollableViewportSize(new Dimension(450, 400));
+        //mainTable_JTable.setPreferredScrollableViewportSize(new Dimension(450, 400));
         //mainTable_JTable.setBounds(30, 40, 200, 300);
         //mainTable_JTable.setPreferredScrollableViewportSize(new Dimension(200,300));
         
         mainPane_JScrollPane = new JScrollPane(mainTable_JTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.guiPane.add(mainPane_JScrollPane);
+        this.guiPane.add(back_JButton);
         
-//        for(JLabel tempJLabel:Dates_JLabels)
-//        {
-//            panelForScrollablePage_JPanel.add(tempJLabel);
-//        }
-//        
-//        for(ArrayList<JLabel> tempJLabelList:listEntrys)
-//        {
-//            for(JLabel tempJLabel:tempJLabelList)
-//            {
-//                 panelForScrollablePage_JPanel.add(tempJLabel);
-//            }
-//        }
-        
-        
-        
-        
-        
+
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.setContentPane(this.guiPane);
         //.......................................
     }
     
+    public void AdvancedMenu()
+    {
+        JButton getReservations_JButton;
+        //Κώδικας που χρειάζεται σε κάθε παράθυρο
+        this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
+        this.guiPane = this.getContentPane();
+        GridLayout NewReservation_GridLayout = new GridLayout(3,4);
+        this.guiPane.setLayout(NewReservation_GridLayout);
+        //.......................................
+        
+        getReservations_JButton = new JButton("Σε αρχείο");
+        getReservations_JButton.addActionListener(
+            new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent e) 
+                {
+                    try(BufferedWriter tempBuffWriter = new BufferedWriter(new FileWriter("./"+"res.txt")))
+                    {
+                        String reserveInfo_String = "marios pros to paron";
+                        
+                        tempBuffWriter.write(reserveInfo_String);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        );
+        
+        this.guiPane.add(getReservations_JButton);
+        //Κώδικας που χρειάζεται σε κάθε παράθυρο
+        this.setContentPane(this.guiPane);
+        //.......................................
+    }
     
     /* Parakato kodikas gia oles tis methodous
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
@@ -683,6 +704,8 @@ public class Gui extends JFrame
         this.setContentPane(this.guiPane);
         //.......................................
     */
+    
+    
     
     public JButton NewBackButton()
     {//Επιστρέφει ένα κουμπί το οποίο γυρνάει πίσω στο αρχικο μενού
