@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java_project.Reservation;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 public class Gui extends JFrame
 {
@@ -41,7 +43,7 @@ public class Gui extends JFrame
         
         
         
-        LoginMenu();//καλό το state LoginMenu το οποίο αλλάζει το παράθυρο
+        MainMenu("marios");//καλό το state LoginMenu το οποίο αλλάζει το παράθυρο
     }
     
     
@@ -82,7 +84,7 @@ public class Gui extends JFrame
         
 
         );
-        System.out.println(this.getFocusOwner().toString());
+        //System.out.println(this.getFocusOwner().toString());
         this.guiPane.add(login_JLabel1);
         this.guiPane.add(login_JLabel2);
         this.guiPane.add(login_JTextField);
@@ -643,9 +645,7 @@ public class Gui extends JFrame
         
         mainTable_JTable = new JTable(tempArrayForValues,Dates_String.toArray());
         mainTable_JTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        //mainTable_JTable.setPreferredScrollableViewportSize(new Dimension(450, 400));
-        //mainTable_JTable.setBounds(30, 40, 200, 300);
-        //mainTable_JTable.setPreferredScrollableViewportSize(new Dimension(200,300));
+        
         
         mainPane_JScrollPane = new JScrollPane(mainTable_JTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.guiPane.add(mainPane_JScrollPane);
@@ -659,7 +659,7 @@ public class Gui extends JFrame
     
     public void AdvancedMenu()
     {
-        JButton getReservations_JButton;
+        JButton getReservations_JButton,showBarChart_JButton;
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
         this.guiPane = this.getContentPane();
@@ -675,17 +675,47 @@ public class Gui extends JFrame
                 {
                     try(BufferedWriter tempBuffWriter = new BufferedWriter(new FileWriter("./"+"res.txt")))
                     {
-                        String reserveInfo_String = "marios pros to paron";
-                        
-                        tempBuffWriter.write(reserveInfo_String);
+                        for(Reservation tempReservation: hotel.Get_Reservations())
+                        {
+                            tempBuffWriter.write(tempReservation.toFile());
+                            tempBuffWriter.newLine();
+                        }
                     } catch (IOException ex) {
                         Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         );
+        showBarChart_JButton = new JButton("Γράφημα");
+        showBarChart_JButton.addActionListener(
+            new ActionListener() 
+            {
+                public void actionPerformed(ActionEvent e) 
+                {
+                    int values[]={1,5,4,7,120};
+                    String labels[] = {"1","2","3","4","5"};
+                    BarChart functionBarChart = new BarChart("yolo", values, labels);
+                    
+                    JFrame frame = new JFrame("Histogram");
+                    frame.setMinimumSize(new Dimension(400,400));
+                    frame.add(functionBarChart);
+                    frame.pack();
+                    Dimension frameDimension = Toolkit.getDefaultToolkit().getScreenSize();
+                    frame.setLocation(frameDimension.width/2-frame.getSize().width/2, frameDimension.height/2-frame.getSize().height/2);
+                    
+                    frame.setVisible(true);
+                    
+                    
+                    
+                    
+                    
+                }
+            }
+        
+        );
         
         this.guiPane.add(getReservations_JButton);
+        this.guiPane.add(showBarChart_JButton);
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.setContentPane(this.guiPane);
         //.......................................
@@ -721,4 +751,99 @@ public class Gui extends JFrame
         );
         return back_JButton;
     }
+    
+    static class BarChart extends JPanel
+    {
+        private int[] chartValues;
+        private String[] chartLabels;
+        private String chartTitle;
+        
+        public BarChart(String title,int[] values,String[]labels)
+        {
+            this.chartTitle = title;
+            this.chartValues = values;
+            this.chartLabels = labels;
+        }
+        
+        public void paintComponent(Graphics g)
+        {
+            super.paintComponent(g);
+            
+            Random r = new Random();
+            
+            if(this.chartValues == null || this.chartValues.length==0)
+            {
+                return;
+            }
+            
+            Dimension chartDimension = this.getSize();
+            int panelWidth = chartDimension.width;
+            int panelHeight = chartDimension.height;
+            int barWidth = panelWidth / this.chartValues.length;
+            int maxValue = this.chartValues[0];
+            int minValue = this.chartValues[0];
+            for(int tempValue:this.chartValues)
+            {
+                maxValue = Math.max(maxValue, tempValue);
+                minValue = Math.min(minValue, tempValue);
+            }
+            
+            Font titleFont = new Font("Book Antiqua", Font.BOLD, 15);
+            FontMetrics titleFontMetrics  = g.getFontMetrics(titleFont);
+            
+            Font labelFont = new Font("Book Antiqua", Font.PLAIN, 14);
+            FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
+            
+            int titleWidth = titleFontMetrics.stringWidth(this.chartTitle);
+            int stringHeight = titleFontMetrics.getAscent();
+            int stringWidth = (panelWidth - titleWidth) / 2;
+            g.setFont(titleFont);
+            g.drawString(this.chartTitle, stringWidth, stringHeight);
+            
+            int top = titleFontMetrics.getHeight();
+            int bottom = labelFontMetrics.getHeight();
+            
+            if(maxValue==minValue)
+            {
+                return;
+            }
+            
+            double barScale = (panelHeight - top - bottom)/(double)(maxValue - minValue);
+            
+            stringHeight = panelHeight - labelFontMetrics.getDescent();
+            
+            int xPos = 5;
+            g.setFont(labelFont);
+            for(int i=0; i<this.chartValues.length;i++)
+            {
+                int tempValue = this.chartValues[i];
+                int barHeight = (int) ( (double)tempValue * barScale);
+                int yPos =  top;
+                
+                if(tempValue>=0)
+                {
+                    yPos += (int) ((maxValue - tempValue)* barScale);
+                }
+                else
+                {
+                    yPos += (int) (maxValue * barScale);
+                    barHeight = - barHeight;
+                }
+                
+                g.setColor(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));
+                
+                g.fillRect(xPos, yPos, barWidth, barHeight);
+                g.setColor(Color.BLUE);
+                g.drawRect(xPos, yPos, barWidth, barHeight);
+                
+                xPos += barWidth;
+            }
+            
+            g.setColor(Color.BLACK);
+            g.drawString("Xronos", stringWidth, stringHeight);
+            
+            
+        }
+    }
+
 }

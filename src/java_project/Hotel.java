@@ -278,6 +278,11 @@ public class Hotel {
        return false;
     }
     
+    public List<Reservation> Get_Reservations()
+    {
+        return this.hReservations.getAllReservations();
+    }
+    
     public void UniqueTypes(Date occupied_date)
     {
         HashSet<String> typeHashSet = new HashSet<>();//Δημιουργώ ένα νέο αντικείμενο τύπου Hashset για να αποθηκεύσω μοναδικά string

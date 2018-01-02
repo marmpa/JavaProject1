@@ -17,7 +17,7 @@ public class Tester2
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
-        int t = sc.nextInt();
+        int t = 1;
         if(t==1)
         {
             test();

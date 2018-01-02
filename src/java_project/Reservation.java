@@ -194,6 +194,34 @@ public class Reservation
         return tempString;
     }
     
+    public String GetObjectId(Object room_car_type)
+    {//επιστρέφει το ID του αντικειμένου που θα είναι η τύπου Room ή τύπου Vehicle
+        String ID_String = "none";
+        
+        try
+        {
+            String methodName = "getID";//Αποθηκεύω σε μία μεταβλητή το όνομα της μεθόδου που θέλω να καλέσω
+            Method objectMethod = room_car_type.getClass().getMethod(methodName, null);//απθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
+            //rented ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
+            
+            ID_String = (String) objectMethod.invoke(room_car_type, null);// δημιουργώ το ID το οποίο αφού γίνει η invoke
+            //θα επιστρέψει το αποτέλεσμα της συνάρτησης παραπάνω και εφόσον δεν υπάρχουν exception τότε θα επιστρέψει το String 
+            //που θέλουμε
+        } catch (NoSuchMethodException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvocationTargetException ex) {
+            Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return ID_String;
+    }
+    
     public String toString(boolean noNeed)
     {
         String tempString;
@@ -223,7 +251,8 @@ public class Reservation
                 + this.reservation_Name+", "
                 + this.dateFormat.format(this.start_date)+", "
                 + this.dateFormat.format(this.finish_date)+", "
-                + typeNamingScheme.get(this.rented.getClass().getSimpleName())+ " ";
+                + typeNamingScheme.get(this.rented.getClass().getSimpleName())
+                +" "+ this.GetObjectId(this.rented);
         }
         catch(Exception e)
         {

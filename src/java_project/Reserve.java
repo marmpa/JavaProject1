@@ -3,6 +3,7 @@
 package java_project;
 
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
@@ -170,14 +171,9 @@ public class Reserve {
                                 return false;
                             }
                         }
-                        
-                        
                     }
-                    
                     tempCal.add(Calendar.DATE,1);//Προσθέτει 1 ημερολογιακή μέρα στην είδη υπάρχοντα μέρα
                     tempDate=tempCal.getTime();//Μετατρέπει το calendar σε date 
-                    
-                    
                 }
                 while(tempDate.compareTo(finish_date)<=0);//Ώσο η tempDate είναι μικρότερη η ίση με την finish_date
             }
@@ -213,6 +209,33 @@ public class Reserve {
             Logger.getLogger(Reserve.class.getName()).log(Level.SEVERE, null, ex);
         }
         return objectID;
+    }
+    
+    public List<Reservation> getAllReservations()
+    {//Επιστρέφει όλες τις κρατήσεις που βρήσκονται στο treemap
+        List<Reservation> allReservations = new ArrayList<>();//φτιάχνω μία νέα λίστα η οποία κρατάει κρατήσεις
+        
+        for(Object objectType:reserveList)
+        {//για κάθε αντικείμενο στο reserveList(δύο αντικείμενα οχήματα,δωμάτια)
+            HashMap tempHashMap = (HashMap) objectType;//μετατρέπω το αντικείμενο σε HashMap
+            
+           
+            for(Object tempReservationMap:tempHashMap.entrySet())
+            {//για κάθε αντικείμενο μέσα στο TreeMap(περιέχει πολλες αντιστοιχίες Dates->Reservation)
+                
+                TreeMap<Date,Reservation> tempTreeMap = (TreeMap<Date,Reservation>)(((Map.Entry) tempReservationMap).getValue());
+                
+                for(Map.Entry tempReservationEntry:tempTreeMap.entrySet())
+                {
+                    Reservation tempReservationOfTypeReservation  = (Reservation) tempReservationEntry.getValue();//μετατρέπω το entry.getValue σε
+                    //reservation
+                    allReservations.add(tempReservationOfTypeReservation);
+                }
+                
+            }
+        }
+        
+        return allReservations;
     }
     
     public String randomReservationIdGenarator()
