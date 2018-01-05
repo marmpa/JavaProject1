@@ -1,6 +1,6 @@
 package graphics;
 
-import javax.swing.*;
+import javax.swing.*;//Διάφορα import που χρειάζονται για να λειτουργεί
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,26 +25,26 @@ import java.util.Map;
 import java.util.Random;
 
 public class Gui extends JFrame
-{
-    public final int windowWidth = 800;
+{//Κλάση Gui που κάνει extend το Frame για να δημιουργήσω το παράθυρο
+    public final int windowWidth = 800;//οι διαστάσεις του παραθύρου
     public final int windowHeight = 800;
     
-    public java_project.Hotel hotel;
+    public java_project.Hotel hotel;//ένα αντικείμενου τύπου hotel το οποίο είναι το ξενοδοχείου που φτιάξαμε στο προιγούμενο κομμάτι της άσκησης
     
-    private Container guiPane;
+    private Container guiPane;//ένα container που χρειασημοιποιώ σε κάθε συνάρτηση ώστε να αλλάζω το περιεχόμενο του παραθύρου
     
-    private String currentName;
+    private String currentName;//ενα αντικείμενο τυπου string
     public Gui(java_project.Hotel hotel)
-    {
-        super("Ξενοδοχείο Αιγαίο");//δηλώνω τίτλο στο παράθυρο που θα δημιουργηθεί
-        this.hotel=hotel;//Αναφορά στο ξενοδοχείο
+    {//constructor της κλάσης
+        super("Ξενοδοχείο Αιγαίο");//δηλώνω τίτλο στο παράθυρο που θα δημιουργηθεί//καλή την υπερκλάση για να θέσει το όνομα του παραθύρου
+        this.hotel=hotel;//Αναφορά στο ξενοδοχείο//αποθήκεύει το ξενοδοχείου σε μια μεταβλητή της κλάσης
         this.setSize(windowWidth,windowHeight);//θέτω το μήκος και πλάτος του παραθύρου
         this.setVisible(true);//κάνω το παράθυρο να φαίνεται
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//εάν πατήσει κάποιος exit κλήνει όλο το πρόγραμμα
         
         
         
-        MainMenu("marios");//καλό το state LoginMenu το οποίο αλλάζει το παράθυρο
+        LoginMenu();//καλό το state LoginMenu το οποίο αλλάζει το παράθυρο
     }
     
     
@@ -57,28 +57,28 @@ public class Gui extends JFrame
         String login_JLabel2Text = "Όνομα";
         
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
-        this.guiPane = this.getContentPane();
-        GridLayout login_BorderLayout = new GridLayout(4,2);
-        this.guiPane.setLayout(login_BorderLayout);
+        this.guiPane = this.getContentPane();//θέτω το guiPane στο pane που υπάρχει είδη στο παράθυρο
+        GridLayout login_BorderLayout = new GridLayout(4,2);//θέτω το layout του παραθύρου
+        this.guiPane.setLayout(login_BorderLayout);//το θέτω στο παραπάνω pane
         
-        login_JLabel1 = new JLabel(login_JLabel1Text);
+        login_JLabel1 = new JLabel(login_JLabel1Text);//φτιάχνω ένα νέο αντικείμενο τύπου JLabel και του βάζω σαν text το login_JLavel1Text
         //login_JLabel1.setSize(250,250);
         
-        login_JLabel2 = new JLabel(login_JLabel2Text,JLabel.CENTER);
+        login_JLabel2 = new JLabel(login_JLabel2Text,JLabel.CENTER);//το τοποθετώ στο κέντρο
         
-        login_JTextField = new JTextField();
-        
-        
+        login_JTextField = new JTextField();//δημιουργώ ένα νέο textfield στο οποίο μπορεί να πληκτρολογήσει ο παίκτης
         
         
-        login_JTextField.addActionListener(
+        
+        
+        login_JTextField.addActionListener(//βάζω actionListener ο οποίος ακούει οταν πατήσει ο χρήστης enter στο textfield
             new ActionListener()
-            {
+            {//νέο αντικείμενο ActionListener
                 public void actionPerformed(ActionEvent e)
-                {
-                    String login_name = login_JTextField.getText();
+                {//συνάρτηση lambda η οποία τσεκάρει για τι διάφορα events στην προκημένη περίπτωση πότε πατήθηκε enter
+                    String login_name = login_JTextField.getText();//παίρνει το όνομα απο το πεδίο και το αποθηκεύει σε μεταβλητή
                     currentName=login_name;
-                    MainMenu(login_name);
+                    MainMenu(login_name);//καλή την MainMenu με text το κείμενο που έδοσε ο χρήστης
                 }
             }
           
@@ -86,9 +86,9 @@ public class Gui extends JFrame
 
         );
         //System.out.println(this.getFocusOwner().toString());
-        this.guiPane.add(login_JLabel1);
-        this.guiPane.add(login_JLabel2);
-        this.guiPane.add(login_JTextField);
+        this.guiPane.add(login_JLabel1);//προσθέτει στο Pane τα διάφορα αντικείμενα ώστε να φαίνονται μέσα στην οθόνη της εφαρφμογής
+        this.guiPane.add(login_JLabel2);//παρομοίος
+        this.guiPane.add(login_JTextField);//παρομοίος
         
         this.setContentPane(this.guiPane);
         
@@ -665,12 +665,7 @@ public class Gui extends JFrame
         
         Date from_Date=null,to_Date=null;
         
-        //Κώδικας που χρειάζεται σε κάθε παράθυρο
-        this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
-        this.guiPane = this.getContentPane();
-        GridLayout NewReservation_GridLayout = new GridLayout(3,4);
-        this.guiPane.setLayout(NewReservation_GridLayout);
-        //.......................................
+        
         
         fromDate_JLabel = new JLabel("Ημερομηνία από");
         toDate_JLabel = new JLabel("Ημερομηνία μέχρι");
@@ -686,9 +681,7 @@ public class Gui extends JFrame
             toDate_JTextField
         };
         
-        //Κώδικας που χρειάζεται σε κάθε παράθυρο
-        this.setContentPane(this.guiPane);
-        //.......................................
+       
         
         
         boolean checkIfNotAnswered=true;
@@ -711,7 +704,7 @@ public class Gui extends JFrame
                 }
                 else if(result==JOptionPane.CLOSED_OPTION)
                 {
-                    MainMenu(currentName);
+                    AdvancedMenu();
                     return;
                 }
             }
@@ -722,12 +715,12 @@ public class Gui extends JFrame
             
             
         }
-        RentalsAvailabilityForm(from_Date, to_Date);
+        CompletionChartDiagram(from_Date, to_Date);
     }
     
     public void AdvancedMenu()
     {
-        JButton getReservations_JButton,showBarChart_JButton;
+        JButton getReservations_JButton,showBarChart_JButton,back_JButton;
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
         this.guiPane = this.getContentPane();
@@ -760,39 +753,41 @@ public class Gui extends JFrame
             {
                 public void actionPerformed(ActionEvent e) 
                 {
-                    Calendar tempCal = Calendar.getInstance();
-                    tempCal.set(2017,11,20);
-                    Date from_Date,to_Date;
-                    from_Date=tempCal.getTime();
-                    tempCal.add(Calendar.DATE, 7);
-                    to_Date = tempCal.getTime();
-                    int values[]={5,2,10,8,4,12};
-                    //values = hotel.Get_Fullness_Percentage(from_Date, to_Date).stream().map(i -> (i == null ? 0 : i))
-                       //     .mapToInt(Integer::intValue)
-                      //      .toArray();
-                    
-                    String labels[] = {"1","2","3","4","5"};
-                    BarChart functionBarChart = new BarChart("yolo", values, labels);
-                    
-                    JFrame frame = new JFrame("Histogram");
-                    frame.setMinimumSize(new Dimension(400,400));
-                    frame.add(functionBarChart);
-                    frame.pack();
-                    Dimension frameDimension = Toolkit.getDefaultToolkit().getScreenSize();
-                    frame.setLocation(frameDimension.width/2-frame.getSize().width/2, frameDimension.height/2-frame.getSize().height/2);
-                    
-                    frame.setVisible(true);
+                    AdvancedDatesPopup();
                     
                 }
             }
         
         );
         
+        back_JButton = NewBackButton();
+        
         this.guiPane.add(getReservations_JButton);
         this.guiPane.add(showBarChart_JButton);
+        this.guiPane.add(back_JButton);
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.setContentPane(this.guiPane);
         //.......................................
+    }
+    
+    public void CompletionChartDiagram(Date from_Date,Date to_Date)
+    {
+        int values[];
+        values = hotel.Get_Fullness_Percentage(from_Date, to_Date).stream().map(i -> (i == null ? 0 : i))
+            .mapToInt(Integer::intValue)
+            .toArray();
+                    
+            String labels[] = {"1","2","3","4","5"};
+            BarChart functionBarChart = new BarChart("Γράφημα", values, labels);
+                    
+            JFrame frame = new JFrame("Histogram");
+            frame.setMinimumSize(new Dimension(400,400));
+            frame.add(functionBarChart);
+            frame.pack();
+            Dimension frameDimension = Toolkit.getDefaultToolkit().getScreenSize();
+            frame.setLocation(frameDimension.width/2-frame.getSize().width/2, frameDimension.height/2-frame.getSize().height/2);
+                    
+            frame.setVisible(true);
     }
     
     /* Parakato kodikas gia oles tis methodous
