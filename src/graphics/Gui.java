@@ -53,7 +53,7 @@ public class Gui extends JFrame
     {
         JLabel login_JLabel1,login_JLabel2;//Δηλώνω δύο labels
         JTextField login_JTextField;//Και ένα Textfiled για να μπορώ να γράψω
-        String login_JLabel1Text = "Kalosirthate gia sas gia sas gia sas gia sas gias sas";
+        String login_JLabel1Text = "Kalosirthate gia sas gia sas gia sas gia sas gias sas";//κείμενο
         String login_JLabel2Text = "Όνομα";
         
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
