@@ -74,13 +74,13 @@ public class Reservation
     
     public boolean Contains(Date date)
     {
-        LocalDate tempStart_date,tempfinish_date,tempDate;
+        LocalDate tempStart_date,tempfinish_date,tempDate;//φτιάχνω ένα αντικείμενο τύπου LocalDate
         
-        tempStart_date = this.start_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        tempfinish_date = this.finish_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        tempDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        tempStart_date = this.start_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();//μετατρέπω την ημερομηνία σε LocalDate
+        tempfinish_date = this.finish_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();//παρομοίος
+        tempDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();//παρομοίος
         
-        //return !(start_date.after(date)||finish_date.before(date));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
+        
         return !(tempStart_date.isAfter(tempDate)||tempfinish_date.isBefore(tempDate));//Επιστρέφει εάν η ημερομηνία είναι ανάμεσα στις δύο τις τορινής κράτησης
     }
     

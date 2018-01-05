@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -657,6 +658,73 @@ public class Gui extends JFrame
         //.......................................
     }
     
+    public void AdvancedDatesPopup()
+    {
+        JLabel fromDate_JLabel,toDate_JLabel;
+        JTextField fromDate_JTextField,toDate_JTextField;
+        
+        Date from_Date=null,to_Date=null;
+        
+        //Κώδικας που χρειάζεται σε κάθε παράθυρο
+        this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
+        this.guiPane = this.getContentPane();
+        GridLayout NewReservation_GridLayout = new GridLayout(3,4);
+        this.guiPane.setLayout(NewReservation_GridLayout);
+        //.......................................
+        
+        fromDate_JLabel = new JLabel("Ημερομηνία από");
+        toDate_JLabel = new JLabel("Ημερομηνία μέχρι");
+        
+        fromDate_JTextField = new JTextField();
+        toDate_JTextField = new JTextField();
+        
+        final JComponent[] message_JComponents = new JComponent[]
+        {
+            fromDate_JLabel,
+            fromDate_JTextField,
+            toDate_JLabel,
+            toDate_JTextField
+        };
+        
+        //Κώδικας που χρειάζεται σε κάθε παράθυρο
+        this.setContentPane(this.guiPane);
+        //.......................................
+        
+        
+        boolean checkIfNotAnswered=true;
+        SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");
+        while(checkIfNotAnswered)
+        {
+            int result = JOptionPane.showConfirmDialog(getContentPane(), message_JComponents,"Διάλεξε ημερομηνία",JOptionPane.PLAIN_MESSAGE);
+            
+            try
+            {
+                if(result==JOptionPane.OK_OPTION)
+                {
+                    from_Date = tempDateFormat.parse(fromDate_JTextField.getText());
+                    to_Date = tempDateFormat.parse(toDate_JTextField.getText());
+                    
+                    if(!from_Date.after(to_Date))
+                    {
+                        checkIfNotAnswered=false;
+                    }
+                }
+                else if(result==JOptionPane.CLOSED_OPTION)
+                {
+                    MainMenu(currentName);
+                    return;
+                }
+            }
+            catch (ParseException ex) 
+            {
+                
+            }
+            
+            
+        }
+        RentalsAvailabilityForm(from_Date, to_Date);
+    }
+    
     public void AdvancedMenu()
     {
         JButton getReservations_JButton,showBarChart_JButton;
@@ -692,7 +760,17 @@ public class Gui extends JFrame
             {
                 public void actionPerformed(ActionEvent e) 
                 {
-                    int values[]={1,5,4,7,120};
+                    Calendar tempCal = Calendar.getInstance();
+                    tempCal.set(2017,11,20);
+                    Date from_Date,to_Date;
+                    from_Date=tempCal.getTime();
+                    tempCal.add(Calendar.DATE, 7);
+                    to_Date = tempCal.getTime();
+                    int values[]={5,2,10,8,4,12};
+                    //values = hotel.Get_Fullness_Percentage(from_Date, to_Date).stream().map(i -> (i == null ? 0 : i))
+                       //     .mapToInt(Integer::intValue)
+                      //      .toArray();
+                    
                     String labels[] = {"1","2","3","4","5"};
                     BarChart functionBarChart = new BarChart("yolo", values, labels);
                     
@@ -704,10 +782,6 @@ public class Gui extends JFrame
                     frame.setLocation(frameDimension.width/2-frame.getSize().width/2, frameDimension.height/2-frame.getSize().height/2);
                     
                     frame.setVisible(true);
-                    
-                    
-                    
-                    
                     
                 }
             }
@@ -767,12 +841,13 @@ public class Gui extends JFrame
         
         public void paintComponent(Graphics g)
         {
-            super.paintComponent(g);
+            super.paintComponent(g);//Καλεί την υπερκλάση και περνά το g σάν παράμετρο
             
-            Random r = new Random();
+            Random r = new Random();//Δημιουργεί ένα αντικείμενο τύπου Random
+            
             
             if(this.chartValues == null || this.chartValues.length==0)
-            {
+            {//Εάν ο πίνακας είναι null ή το μέγεθος του ειναι 0
                 return;
             }
             
@@ -780,8 +855,8 @@ public class Gui extends JFrame
             int panelWidth = chartDimension.width;
             int panelHeight = chartDimension.height;
             int barWidth = panelWidth / this.chartValues.length;
-            int maxValue = this.chartValues[0];
-            int minValue = this.chartValues[0];
+            int maxValue = 0;
+            int minValue = 0;
             for(int tempValue:this.chartValues)
             {
                 maxValue = Math.max(maxValue, tempValue);
@@ -803,22 +878,27 @@ public class Gui extends JFrame
             int top = titleFontMetrics.getHeight();
             int bottom = labelFontMetrics.getHeight();
             
+            
+            
             if(maxValue==minValue)
             {
                 return;
             }
-            
             double barScale = (panelHeight - top - bottom)/(double)(maxValue - minValue);
+            
+           
             
             stringHeight = panelHeight - labelFontMetrics.getDescent();
             
-            int xPos = 5;
+            
+            
             g.setFont(labelFont);
             for(int i=0; i<this.chartValues.length;i++)
             {
+                int xPos = barWidth*i + 1;
                 int tempValue = this.chartValues[i];
-                int barHeight = (int) ( (double)tempValue * barScale);
-                int yPos =  top;
+                int barHeight = (int) (tempValue * barScale);
+                int yPos = top;
                 
                 if(tempValue>=0)
                 {
@@ -832,15 +912,16 @@ public class Gui extends JFrame
                 
                 g.setColor(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));
                 
-                g.fillRect(xPos, yPos, barWidth, barHeight);
+                g.fillRect(xPos, yPos, barWidth-2, barHeight);
                 g.setColor(Color.BLUE);
-                g.drawRect(xPos, yPos, barWidth, barHeight);
+                g.drawRect(xPos, yPos, barWidth-2, barHeight);
                 
-                xPos += barWidth;
+                
             }
             
-            g.setColor(Color.BLACK);
-            g.drawString("Xronos", stringWidth, stringHeight);
+            
+            g.drawString("Xronos", stringWidth,stringHeight);
+            
             
             
         }

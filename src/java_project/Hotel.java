@@ -283,6 +283,33 @@ public class Hotel {
         return this.hReservations.getAllReservations();
     }
     
+    public List<Integer> Get_Fullness_Percentage(Date from_Date,Date to_Date)
+    {
+        List<Integer> listOfPercentages = new ArrayList<>();
+        List<Reservation> listOfReservations = Get_Reservations();
+        
+        Calendar tempCal = Calendar.getInstance();
+        tempCal.setTime(from_Date);
+        Date tempDate = tempCal.getTime();
+        
+        for(tempDate=tempCal.getTime();!tempDate.after(to_Date);tempCal.add(Calendar.DATE,1),tempDate=tempCal.getTime())
+        {
+            int howManyPerDayCounter=0;
+            for(Reservation tempReservation:listOfReservations)
+            {
+                if(tempReservation.Contains(tempDate))
+                {
+                    howManyPerDayCounter+=1;
+                }
+            }
+            
+            listOfPercentages.add(howManyPerDayCounter);//Προσθέτω στη λίστα το άθροισμα των δωματίων που είναι κλεισμένα εκείνη τη μέρα
+        }
+        
+        
+        return listOfPercentages;
+    }
+    
     public void UniqueTypes(Date occupied_date)
     {
         HashSet<String> typeHashSet = new HashSet<>();//Δημιουργώ ένα νέο αντικείμενο τύπου Hashset για να αποθηκεύσω μοναδικά string
