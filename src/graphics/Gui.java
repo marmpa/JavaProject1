@@ -90,44 +90,39 @@ public class Gui extends JFrame
         this.guiPane.add(login_JLabel2);//παρομοίος
         this.guiPane.add(login_JTextField);//παρομοίος
         
-        this.setContentPane(this.guiPane);
+        this.setContentPane(this.guiPane);//θέτω το pane του jframe στο pane που δημιούργησα και έβαλα αντικείμενα πιο πριν
         
     }
-    //να επιστρέφω το username στην main!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
     
     public void MainMenu(String userName)
     {
-        JLabel title_JLabel,menuTitle_JLabel;
-        JButton option1_JButton,option2_JButton,option3_JButton,option4_JButton,option5_JButton;
+        JLabel title_JLabel,menuTitle_JLabel;//δηλώνω δυο JLabel αντικείμενα
+        JButton option1_JButton,option2_JButton,option3_JButton,option4_JButton,option5_JButton;//Δηλώνω τρία αντικείμενα τύπου JButton
         
-        JLabel hotelImage_JLabel;
+        JLabel hotelImage_JLabel;//αντικείμενο τύπου label
         
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
-        this.guiPane = this.getContentPane();
-        GridLayout mainMenu_BorderLayout = new GridLayout(4,2);
-        this.guiPane.setLayout(mainMenu_BorderLayout);
+        this.guiPane = this.getContentPane();//θέτω το guiPane με το current pane
+        GridLayout mainMenu_BorderLayout = new GridLayout(4,2);//δημιουργώ ένα νέο αντικείμενο gridlayout στο οποίο και το τοποθετώ πιο μετά τα αντικείμενα
+        this.guiPane.setLayout(mainMenu_BorderLayout);//θέτω το layout αυτου το pane
         
-        title_JLabel = new JLabel("Ξενοδοχείο αιγαίο");
-        title_JLabel.setFont(new Font("Serif", Font.BOLD, 30));
+        title_JLabel = new JLabel("Ξενοδοχείο αιγαίο");//ορίζω όνομα στο laybel
+        title_JLabel.setFont(new Font("Serif", Font.BOLD, 30));//ορίζω το μέγεθος γραμματοσειρας
         
-        menuTitle_JLabel = new JLabel("Μενού Επιλογών");
-        menuTitle_JLabel.setFont(new Font("Serif", Font.BOLD, 20));
+        menuTitle_JLabel = new JLabel("Μενού Επιλογών");//ορίζω όνομα στο laybel
+        menuTitle_JLabel.setFont(new Font("Serif", Font.BOLD, 20));//ορίζω το μέγεθος γραμματοσειρας
         
-        option1_JButton = new JButton("Dimiourgia");
-        option2_JButton = new JButton("Diagrafi");
-        option3_JButton = new JButton("Anazitisi");
-        option4_JButton = new JButton("Diathesima domatia");
-        option5_JButton = new JButton("Advanced");
+        option1_JButton = new JButton("Dimiourgia");//ορίζω όνομα στο button
+        option2_JButton = new JButton("Diagrafi");//ορίζω όνομα στο button
+        option3_JButton = new JButton("Anazitisi");//παρομοίος
+        option4_JButton = new JButton("Diathesima domatia");//παρομοίος
+        option5_JButton = new JButton("Advanced");//παρομοίος
         
-        option1_JButton.addActionListener(
+        option1_JButton.addActionListener(//actionlistener ο οποίος κοιτάει πότε πατιέται το κουμπί
         new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
+        {//νέο αντικείμενο τύπου Actionlister
+            public void actionPerformed(ActionEvent e)//κάνω overwrite την μέθοδο actionPerformed
             {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για καινούργια κράτηση
                 NewReservationForm();
             }
@@ -135,132 +130,134 @@ public class Gui extends JFrame
         );
         
         option2_JButton.addActionListener(
-        new ActionListener()
+        new ActionListener()//actionlistener ο οποίος κοιτάει πότε πατιέται το κουμπί
         {
             public void actionPerformed(ActionEvent e)
-            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για καινούργια κράτηση
+            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για διαγραφή κράτησης
                 DeleteResvationForm();
             }
         } 
         );
         
         option3_JButton.addActionListener(
-        new ActionListener()
+        new ActionListener()//actionlistener ο οποίος κοιτάει πότε πατιέται το κουμπί
         {
             public void actionPerformed(ActionEvent e)
-            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για καινούργια κράτηση
+            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για έλενχο κράτησης
                 CheckReservationForm();
             }
         } 
         );
         
         option4_JButton.addActionListener(
-        new ActionListener()
+        new ActionListener()//actionlistener ο οποίος κοιτάει πότε πατιέται το κουμπί
         {
             public void actionPerformed(ActionEvent e)
-            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για καινούργια κράτηση
+            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για έλενχο κενών δωματίων
                 RentalsAvailabilityDatesPopup();
             }
         } 
         );
         
         option5_JButton.addActionListener(
-        new ActionListener()
+        new ActionListener()//actionlistener ο οποίος κοιτάει πότε πατιέται το κουμπί
         {
             public void actionPerformed(ActionEvent e)
-            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα για καινούργια κράτηση
+            {//Εάν πατειθεί το συγκεκριμένο κουμπί τότε μπαίνει στην φόρμα advanced menu
                 AdvancedMenu();
             }
         } 
         );
         
-        this.guiPane.add(title_JLabel);
-        this.guiPane.add(menuTitle_JLabel);
+        this.guiPane.add(title_JLabel);//βάζω το αντικείμενο μέσα το Pane
+        this.guiPane.add(menuTitle_JLabel);//βάζω το αντικείμενο μέσα το Pane
         
-        this.guiPane.add(option1_JButton);
-        this.guiPane.add(option2_JButton);
-        this.guiPane.add(option3_JButton);
-        this.guiPane.add(option4_JButton);
-        this.guiPane.add(option5_JButton);
+        this.guiPane.add(option1_JButton);//βάζω το JButton μέσα το Pane
+        this.guiPane.add(option2_JButton);//βάζω το JButton μέσα το Pane
+        this.guiPane.add(option3_JButton);//βάζω το JButton μέσα το Pane
+        this.guiPane.add(option4_JButton);//βάζω το JButton μέσα το Pane
+        this.guiPane.add(option5_JButton);//βάζω το JButton μέσα το Pane
         
-        this.setContentPane(this.guiPane);
-        //this.pack();
+        this.setContentPane(this.guiPane);//βάζω το pane στο contentpane του current frame
+        
     }
     
     public void NewReservationForm()
     {
-        JLabel from_JLabel,to_JLabel,reservationID_JLabel;
-        JTextField from_JTextField,to_JTextField,reservationID_JTextField;
-        JComboBox reservationItems_JComboBox,reservationID_JComboBox;
-        JButton submit_JButton,back_JButton;
+        JLabel from_JLabel,to_JLabel,reservationID_JLabel;//δηλώνω δύο αντικείμενα JLabel
+        JTextField from_JTextField,to_JTextField,reservationID_JTextField;//δηλώνω JTextField αντικείμενο
+        JComboBox reservationItems_JComboBox,reservationID_JComboBox;//φτιάχνω JComboBox αντικείμενο
+        JButton submit_JButton,back_JButton;//δημιουργώ 2 κουμπιάα
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
         this.guiPane = this.getContentPane();
         GridLayout NewReservation_GridLayout = new GridLayout(4,2);
         this.guiPane.setLayout(NewReservation_GridLayout);
         //.......................................
-        from_JLabel = new JLabel("Από");
-        to_JLabel = new JLabel("Μέχρι");
-        reservationID_JLabel = new JLabel("Διαθέσιμα Ενοικιαζόμενα: ");
+        from_JLabel = new JLabel("Από");//βάζω κείμενο στο label και το δημιουργώ
+        to_JLabel = new JLabel("Μέχρι");//παρομοίως
+        reservationID_JLabel = new JLabel("Διαθέσιμα Ενοικιαζόμενα: ");//νέο αντικείμενο τύπου  JLabel
         
-        from_JTextField = new JTextField();
-        to_JTextField = new JTextField();
-        reservationID_JTextField = new JTextField();
+        from_JTextField = new JTextField();//φτίαχνω νέο αντικείμενο JTextField
+        to_JTextField = new JTextField();//φτίαχνω νέο αντικείμενο JTextField
+        reservationID_JTextField = new JTextField();//φτίαχνω νέο αντικείμενο JTextField
         
-        submit_JButton = new JButton("OK");
-        back_JButton = NewBackButton();
+        submit_JButton = new JButton("OK");//φτίαχνω νέο αντικείμενο JButton και το βάζω όνομα
+        back_JButton = NewBackButton();//καλώ την συνάρτηση NewBackButton() που επιστρέφει ένα έτοιμο κουμπί
         
-        reservationItems_JComboBox = new JComboBox(new String[] 
+        reservationItems_JComboBox = new JComboBox(new String[] //φτίαχνω ένα JComboBox και σαν επιλογή του βάζω όλα τα αντικείμενα που μπορεί να πάρει
         {"","Monoklino","Diklino","Triklino",
          "Politeles Domatio","Gourouna","Autokinito","Mixanaki",
          "Aithousa Ekdiloseon"});
-        reservationID_JComboBox = new JComboBox(hotel.ItemIDs(reservationItems_JComboBox.getSelectedItem().toString()).toArray());
+        reservationID_JComboBox = new JComboBox(hotel.ItemIDs(reservationItems_JComboBox.getSelectedItem().toString()).toArray());//μετατρέπω την επιλογή του χρήστη στο 
+        //αντίστοιχο αλφαριθμητικό του ονόματος της κλάσης και με αυτό παίρνω όλα τα ID που είναι τέτοιου τύπου
         
-        submit_JButton.addActionListener(
+        submit_JButton.addActionListener(//βάζω actionlistener
             new ActionListener() 
             {
                 public void actionPerformed(ActionEvent e) 
-                {
-                    SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");
+                {//αν πατηθεί το κουμπί
+                    SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");//φτιάχνω ένα αντικείμενο τύπου SimpleDateFormat το οποίο 
+                    //χρειάζεται για να μετρέψω αντικείμενα τύπου Date σε αλφαρηθμητικά και αντίστροφα
                     try
-                    {
-                        Date from_Date = tempDateFormat.parse(from_JTextField.getText());
-                        Date to_Date = tempDateFormat.parse(to_JTextField.getText());
+                    {//δοκίμασε 
+                        Date from_Date = tempDateFormat.parse(from_JTextField.getText());//πάρε την τιμή του textfield και έπειτα μετάτρεψε το σε Date
+                        Date to_Date = tempDateFormat.parse(to_JTextField.getText());//πάρε την τιμή του textfield και έπειτα μετάτρεψε το σε Date
                         
                         if(from_Date.after(to_Date))
                         {//Εάν το from_Date > to_Date
-                            to_JTextField.setText(from_JTextField.getText());
-                            to_Date = tempDateFormat.parse(to_JTextField.getText());
+                            to_JTextField.setText(from_JTextField.getText());//βάλε στο text του δεύτερου label το κείμενο του πρώτου
+                            to_Date = tempDateFormat.parse(to_JTextField.getText());//και θέσε το to_Date με βάση αυτό
                         }
                         
-                        String ID_String = reservationID_JTextField.getText();
+                        String ID_String = reservationID_JTextField.getText();//πάρε το κείμενο (ID) από το αντίστοιχο textfield
                         
 //                        if(reservationItems_JComboBox.getSelectedItem().toString().isEmpty())
 //                        {
 //                            ((DefaultComboBoxModel) reservationItems_JComboBox.getModel()).getIndexOf(ABORT);
 //                        }
                         
-                        int userOption=-1;
+                        int userOption=-1;//ένα νουμερο που κρατάει την επιλογή του χρήστη
                         if(hotel.hReservations.rentalsList.get(ID_String)==null)
-                        {
+                        {//εάν δεν υπάρχει αυτό το ID
                             JOptionPane.showMessageDialog(getContentPane(),"Το αντικείμενο που προσπαθείς να προσθέσεις δεν υπάρχει");
                         }
                         else if(hotel.hReservations.Available(from_Date, to_Date, hotel.hReservations.rentalsList.get(ID_String)))
-                        {//Εάν το μπήκε το η κράτηση μέσα στο Reservation
+                        {//Εάν το μπήκε  η κράτηση μέσα στο Reservation
                             userOption=JOptionPane.showConfirmDialog(getContentPane(), 
                                     "Θέλεται να κάνεται την κράτηση?\n Θα κοστίσει: "+java_project.Reservation.CostBeforeReservation(from_Date, to_Date, hotel.hReservations.rentalsList.get(ID_String))+"\u20ac"
-                                    ,"",JOptionPane.YES_NO_OPTION);
+                                    ,"",JOptionPane.YES_NO_OPTION);//ένα μύνημα επιβεβαίωσης
                             if(userOption==0)
                             {//Εάν πάτησε ναί
-                                String randomStringReservationID = hotel.hReservations.randomReservationIdGenarator();
+                                String randomStringReservationID = hotel.hReservations.randomReservationIdGenarator();//παίρνω ένα τυχαίο string απο την randomReservationIdGenerator
                                 boolean added = hotel.NewReservation(randomStringReservationID, currentName, from_Date, to_Date, hotel.hReservations.rentalsList.get(ID_String));
                                 //προσθέτω νέα κράτηση στο ημερολόγιο κρατήσεων
                                 
                                 if(added)
-                                {
+                                {//εάν προσθέτηκε
                                     JOptionPane.showMessageDialog(getContentPane(),"Η κράτηση σας καταχωρήθηκε επιτυχώς\n"
                                         + "ID Κράτησης: "
-                                        + randomStringReservationID);
+                                        + randomStringReservationID);//εμφανίζει μύνημα επιτυχίας
                                 }
                                 
                                 //System.out.println("YYYYYYYYYYYYYYYYYYYYeinai " + hotel.hReservations.Available(from_Date, from_Date, hotel.hReservations.rentalsList.get(ID_String)));
@@ -269,19 +266,20 @@ public class Gui extends JFrame
                             
                         } 
                         else
-                        {
-                            JOptionPane.showMessageDialog(getContentPane(),"Είναι κρατήμένο το "+ID_String);
+                        {//αν δεν είναι διαθέσιμο
+                            JOptionPane.showMessageDialog(getContentPane(),"Είναι κρατήμένο το "+ID_String);//εμφανίζει αντίστοιχο μύνημα
                         }
                         
                         
                         
                     } catch (ParseException ex) 
-                    {
+                    {//Εάν υπάρχει ParseException
                         JOptionPane.showMessageDialog(getContentPane(),"Η ημερομηνία πρέπει να είναι της μορφής dd/mm/yy \nπ.χ 10/08/17","Λάθος ημερομηνία",JOptionPane.ERROR_MESSAGE);
+                        //εμφανίζει μύνημα
                     } 
                     catch(NullPointerException ex)
-                    {
-                        System.out.println("now you see when ;)");
+                    {//Εάν υπάρχει NullPointerException
+                        System.out.println("now you see when ;)");//εκτυπώνει στην κονσόλα
                     }
                     
                 }
@@ -289,32 +287,32 @@ public class Gui extends JFrame
         
         );
         
-        reservationID_JComboBox.setSize(50,50);
+        reservationID_JComboBox.setSize(50,50);//θέτω το μέγεθος του combobox
         
-        reservationItems_JComboBox.addActionListener(
+        reservationItems_JComboBox.addActionListener(//βάζω listener
             new ActionListener() 
             {
                 public void actionPerformed(ActionEvent e) 
-                {
+                {//βάζω τα διαθέσιμα ενοικιαζόμενα
                     reservationID_JLabel.setText("Διαθέσιμα Ενοικιαζόμενα: "+String.join(",",hotel.ItemIDs(reservationItems_JComboBox.getSelectedItem().toString())));
                 }
             }
         );
         
-        reservationID_JTextField.addActionListener(
+        reservationID_JTextField.addActionListener(//βάζω actionlistener
             new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)
                 {
-                    String tempReservationItemID = reservationID_JTextField.getText();
+                    String tempReservationItemID = reservationID_JTextField.getText();//παίρνει το text από την ετοικέτα
                     
                     try
                     {
-                        int tempReservationItemID_int = Integer.parseInt(tempReservationItemID);
+                        int tempReservationItemID_int = Integer.parseInt(tempReservationItemID);//δοκιμάζει να την μετατρέψει σε αριθμό
                         
                     }
                     catch(NumberFormatException ex)
-                    {
+                    {//εαν exception βγάζει μύνημα λάθους
                         reservationID_JTextField.setText("Dose kati to opoio einai arithmos kai oxi: "+tempReservationItemID);
                     }
                     
@@ -324,19 +322,19 @@ public class Gui extends JFrame
         
         
         
-        this.guiPane.add(from_JLabel);
-        this.guiPane.add(from_JTextField);
-        this.guiPane.add(to_JLabel);
-        this.guiPane.add(to_JTextField);
-        this.guiPane.add(reservationItems_JComboBox);
+        this.guiPane.add(from_JLabel);//προσθέτει στον καμβά το αντικείμενο
+        this.guiPane.add(from_JTextField);//παρομοίως
+        this.guiPane.add(to_JLabel);//παρομοίως
+        this.guiPane.add(to_JTextField);//παρομοίως
+        this.guiPane.add(reservationItems_JComboBox);//παρομοίως
         
         
-        JPanel reservationInfo_JPanel  = new JPanel(new GridLayout(2,1));
-        reservationInfo_JPanel.add(reservationID_JLabel);
-        reservationInfo_JPanel.add(reservationID_JTextField);
-        this.guiPane.add(reservationInfo_JPanel);
-        this.guiPane.add(submit_JButton);
-        this.guiPane.add(back_JButton);
+        JPanel reservationInfo_JPanel  = new JPanel(new GridLayout(2,1));//δημιουργώ ένα panel το οπόιο του βάζω gridlayout σαν layout
+        reservationInfo_JPanel.add(reservationID_JLabel);//προσθέτω την ετικέτα στο παραπάνω
+        reservationInfo_JPanel.add(reservationID_JTextField);//παρομοίως
+        this.guiPane.add(reservationInfo_JPanel);//παρομοίως
+        this.guiPane.add(submit_JButton);//παρομοίως
+        this.guiPane.add(back_JButton);//παρομοίως
         //this.guiPane.add(reservationID_JComboBox);
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
@@ -345,10 +343,10 @@ public class Gui extends JFrame
     }
     
     public void DeleteResvationForm()
-    {
-        JLabel deleteID_JLabel;
-        JTextField deleteID_JTextField;
-        JButton confirm_JButton,back_JButton;
+    {//διαγράφη μια κράτηση
+        JLabel deleteID_JLabel;//δηλώνω αντικείμενο
+        JTextField deleteID_JTextField;//παρομοίως
+        JButton confirm_JButton,back_JButton;//παρομοίος
         
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
@@ -358,53 +356,55 @@ public class Gui extends JFrame
         this.guiPane.setLayout(NewReservation_GridLayout);
         //.......................................
         
-        deleteID_JLabel = new JLabel("Γράψε το ID της κράτησης που θέλεις να διαγράψεις");
-        deleteID_JTextField = new JTextField();
+        deleteID_JLabel = new JLabel("Γράψε το ID της κράτησης που θέλεις να διαγράψεις");//νεο αντικείμενο και περνάω όνομα στον constructor
+        deleteID_JTextField = new JTextField();//νεο textfield
         
-        confirm_JButton = new JButton("Confirm");
-        back_JButton = NewBackButton();
-        confirm_JButton.addActionListener(
-            new ActionListener()
+        confirm_JButton = new JButton("Confirm");//νεο κουμπί
+        back_JButton = NewBackButton();//κουμπί απο την συνάρτηση NewBackButtonn που πάει στο αρχικό μενου
+        confirm_JButton.addActionListener(//βάζω actionListener
+            new ActionListener()//νεος actionListener
             {
                 public void actionPerformed(ActionEvent e)
                 {
                     try
-                    {
-                        String ID_String = deleteID_JTextField.getText();
+                    {//δοκίμασε
                         
-                        int userOption=-1;
+                        String ID_String = deleteID_JTextField.getText();//πάρε το κείμενο απο το παιδίο και βάλτο σε ένα String
+                        
+                        int userOption=-1;//θέτω ένα αριθμό == 1
                         if(hotel.Search_code(ID_String, currentName).getID()!=null)
-                        {
+                        {//εάν υπάρχει η κράτηση με αυτό το ID
                             userOption=JOptionPane.showConfirmDialog(getContentPane(), 
                                     "Είστε σίγουροι ότι θέλεται να διαγράψεται την κράτηση με ID: "
                                     + ID_String
                                     ,"",JOptionPane.YES_NO_OPTION
-                            );
+                            );//εμφανίζει μύνημα
                             
                             if(userOption==0)
                             {//Εάν πατήσει ναι το οποίο επιστρέφει στο userOption 0 τότε
-                                boolean deleted = hotel.Delete_reservation(ID_String,currentName);
+                                boolean deleted = hotel.Delete_reservation(ID_String,currentName);//διαγράφω την κράτηση και ελέγχω εάν διαγράφηκε επιτυχός
                                 
                                 if(deleted)
-                                {
+                                {//εάν διαγράφηκε
                                     JOptionPane.showMessageDialog(getContentPane(),"H κράτηση με ID: "
                                         + ID_String
                                         + " διαγράφηκε επιτυχώς"
-                                    );
+                                    );//εμφανίζει αντίστοιχο μύνημα
                                 }
                             }
                         }
                         else
-                        {
+                        {//αλλιώς αν δεν υπάρχει κράτηση με τέτοιο ID
                             JOptionPane.showMessageDialog(getContentPane(),"Δεν υπάρχει κράτηση με ID: "
                                     +ID_String
                                     +"\n                ή\nη κράτηση δεν είναι στο όνομα σας"
-                            );
+                            );//εμφανίζει αντοίστιχο μύνημα
                         }
                     }
                     catch(NullPointerException ex)
-                    {
+                    {//εαν υπάρξει NullPointerException
                         JOptionPane.showMessageDialog(getContentPane(),"Δεν υπάρχει καμία τιμή μέσα στο παιδίο","Καμία τιμή",JOptionPane.ERROR_MESSAGE);
+                        //εμφανίζει μύνημα
                     }
                 }
             }
@@ -412,10 +412,10 @@ public class Gui extends JFrame
         
         );
         
-        this.guiPane.add(deleteID_JLabel);
-        this.guiPane.add(deleteID_JTextField);
-        this.guiPane.add(confirm_JButton);
-        this.guiPane.add(back_JButton);
+        this.guiPane.add(deleteID_JLabel);//προσθέτη τα αντικείμενα στο Pane
+        this.guiPane.add(deleteID_JTextField);//παρομοίως
+        this.guiPane.add(confirm_JButton);//παρομοίως
+        this.guiPane.add(back_JButton);//παρομοίως
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.setContentPane(this.guiPane);
@@ -423,7 +423,7 @@ public class Gui extends JFrame
     }
     
     public void CheckReservationForm()
-    {
+    {//ελέγχει εάν υπάρχει μια κράτηση
         JLabel checkID_JLabel,reservationInfo_JLabel;
         JTextField checkID_JTextField;
         JButton confirm_JButton,back_JButton;
