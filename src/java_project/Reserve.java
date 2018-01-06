@@ -223,19 +223,20 @@ public class Reserve {
             for(Object tempReservationMap:tempHashMap.entrySet())
             {//για κάθε αντικείμενο μέσα στο TreeMap(περιέχει πολλες αντιστοιχίες Dates->Reservation)
                 
-                TreeMap<Date,Reservation> tempTreeMap = (TreeMap<Date,Reservation>)(((Map.Entry) tempReservationMap).getValue());
+                TreeMap<Date,Reservation> tempTreeMap = (TreeMap<Date,Reservation>)(((Map.Entry) tempReservationMap).getValue());//μετατρέπω την τιμή
+                //σε TreeMap
                 
                 for(Map.Entry tempReservationEntry:tempTreeMap.entrySet())
-                {
+                {//προσπελνώ το Map.Entry παραπάνω
                     Reservation tempReservationOfTypeReservation  = (Reservation) tempReservationEntry.getValue();//μετατρέπω το entry.getValue σε
                     //reservation
-                    allReservations.add(tempReservationOfTypeReservation);
+                    allReservations.add(tempReservationOfTypeReservation);//και προσθέτω την κράτηση
                 }
                 
             }
         }
         
-        return allReservations;
+        return allReservations;//επιστρέφω όλες τις κρατήσεις
     }
     
     public String randomReservationIdGenarator()

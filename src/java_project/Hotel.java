@@ -279,27 +279,27 @@ public class Hotel {
     }
     
     public List<Reservation> Get_Reservations()
-    {
+    {//επιστρέφει όλες τις κρατήσεις
         return this.hReservations.getAllReservations();
     }
     
     public List<Integer> Get_Fullness_Percentage(Date from_Date,Date to_Date)
-    {
-        List<Integer> listOfPercentages = new ArrayList<>();
-        List<Reservation> listOfReservations = Get_Reservations();
+    {//επιστρέφει μία λίστα με το πόσσες κρατήσεις υπάρχουν την μέρα
+        List<Integer> listOfPercentages = new ArrayList<>();//θετώ ένα arrayList
+        List<Reservation> listOfReservations = Get_Reservations();//και παίρνω όλες τις κρατήσεις
         
-        Calendar tempCal = Calendar.getInstance();
+        Calendar tempCal = Calendar.getInstance();//φτίαχνω ένα calendar και το χρεισιμοποιώ για να αλλάζω την ημερα στην tempDate παρακάτω
         tempCal.setTime(from_Date);
         Date tempDate = tempCal.getTime();
         
         for(tempDate=tempCal.getTime();!tempDate.after(to_Date);tempCal.add(Calendar.DATE,1),tempDate=tempCal.getTime())
-        {
-            int howManyPerDayCounter=0;
+        {//ξεκινόντας απο την ημερομηνία from_Date αυξάνω την τοπική ημερομηνία μέχρι και το to_Date
+            int howManyPerDayCounter=0;//φτιάχνω ένα counter
             for(Reservation tempReservation:listOfReservations)
-            {
+            {//για κάθε κράτηση
                 if(tempReservation.Contains(tempDate))
-                {
-                    howManyPerDayCounter+=1;
+                {//έαν περιέχεται η μέρα εκεί
+                    howManyPerDayCounter+=1;//πρόσθεσε 1
                 }
             }
             
@@ -307,7 +307,7 @@ public class Hotel {
         }
         
         
-        return listOfPercentages;
+        return listOfPercentages;//επιστρέφω την λιστα
     }
     
     public void UniqueTypes(Date occupied_date)

@@ -424,39 +424,39 @@ public class Gui extends JFrame
     
     public void CheckReservationForm()
     {//ελέγχει εάν υπάρχει μια κράτηση
-        JLabel checkID_JLabel,reservationInfo_JLabel;
-        JTextField checkID_JTextField;
-        JButton confirm_JButton,back_JButton;
+        JLabel checkID_JLabel,reservationInfo_JLabel;//δηλώνω αντικείμενο τύπου JLabel
+        JTextField checkID_JTextField;//δηλώνω αντικείμενο τύπου JTextField
+        JButton confirm_JButton,back_JButton;//και τύπου JButton
         
-        checkID_JLabel = new JLabel("Δώσε ID της κράτησης που θέλεις να δείς: ");
-        reservationInfo_JLabel = new JLabel();
+        checkID_JLabel = new JLabel("Δώσε ID της κράτησης που θέλεις να δείς: ");//νέο JLabel με το σωστό κείμενο
+        reservationInfo_JLabel = new JLabel();//αρχηκοποιώ το αντικείμενο
         
-        checkID_JTextField = new JTextField();
+        checkID_JTextField = new JTextField();//παρομοίως
         
-        confirm_JButton = new JButton("Confirm");
-        back_JButton = NewBackButton();
+        confirm_JButton = new JButton("Confirm");//νεο κουμπί με κατάληλο όνομα
+        back_JButton = NewBackButton();//νεο backButton
         
-        confirm_JButton.addActionListener(
+        confirm_JButton.addActionListener(//βάζω actionListener
             new ActionListener() 
             {
                 public void actionPerformed(ActionEvent e) 
                 {
                     try
-                    {
-                        String ID_String = checkID_JTextField.getText();
+                    {//δοκίμασε
+                        String ID_String = checkID_JTextField.getText();//πάρε το κείμενο απο το textfield
                         
-                        Reservation tempReservation = hotel.Search_code(ID_String, currentName);
+                        Reservation tempReservation = hotel.Search_code(ID_String, currentName);//δοκιμάζει να πάρει την κράτηση ανάλογα με το ID που δόθηκε
                         if(tempReservation.getID()==null)
-                        {
-                            JOptionPane.showMessageDialog(getContentPane(), "Δεν υπάρχει κράτηση με αυτό το ID στο όνομα σας.");
+                        {//εάν το id είναι null
+                            JOptionPane.showMessageDialog(getContentPane(), "Δεν υπάρχει κράτηση με αυτό το ID στο όνομα σας.");//εμφανίζει μύνημα
                         }
                         else
-                        {
-                            reservationInfo_JLabel.setText(tempReservation.toString(true));
+                        {//αλλιώς
+                            reservationInfo_JLabel.setText(tempReservation.toString(true));//καλεί την σωστή toString για να εμφανίσει σωστά την πληροφορίες
                         }
                     }
                     catch(NullPointerException ex)
-                    {
+                    {//εάν υπάρξει NullPointerException εκτυπώνει στη κονσόλα μύνημα
                         System.out.println("Gia kapoio logo to id einai null kati paize me kapia sinartisi sou");
                     }
                 }
@@ -471,11 +471,11 @@ public class Gui extends JFrame
         this.guiPane.setLayout(NewReservation_GridLayout);
         //.......................................
         
-        this.guiPane.add(checkID_JLabel);
-        this.guiPane.add(checkID_JTextField);
-        this.guiPane.add(reservationInfo_JLabel);
-        this.guiPane.add(confirm_JButton);
-        this.guiPane.add(back_JButton);
+        this.guiPane.add(checkID_JLabel);//βάζω το αντικείμενο στο Pane
+        this.guiPane.add(checkID_JTextField);//παρομοίως
+        this.guiPane.add(reservationInfo_JLabel);//παρομοίως
+        this.guiPane.add(confirm_JButton);//παρομοίως
+        this.guiPane.add(back_JButton);//παρομοίως
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.setContentPane(this.guiPane);
@@ -483,11 +483,11 @@ public class Gui extends JFrame
     }
     
     public void RentalsAvailabilityDatesPopup()
-    {
-        JLabel fromDate_JLabel,toDate_JLabel;
-        JTextField fromDate_JTextField,toDate_JTextField;
+    {//δείχνει ένα Popup στο οποιο διαλέγει ημερομηνίες για την συνάρτηση RentalsAvailability
+        JLabel fromDate_JLabel,toDate_JLabel;//δηλώνω αντικείμενα JLabel
+        JTextField fromDate_JTextField,toDate_JTextField;//δηλώνω αντικείμενα JTextField
         
-        Date from_Date=null,to_Date=null;
+        Date from_Date=null,to_Date=null;//θέτω δύο ημερομηνίες με null για να μην βγάζουν πρόβλημα πιο μετά
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
@@ -496,13 +496,13 @@ public class Gui extends JFrame
         this.guiPane.setLayout(NewReservation_GridLayout);
         //.......................................
         
-        fromDate_JLabel = new JLabel("Ημερομηνία από");
+        fromDate_JLabel = new JLabel("Ημερομηνία από");//νεα Jlabel με αντίστοιχα ονόμα και string στον constructor
         toDate_JLabel = new JLabel("Ημερομηνία μέχρι");
         
-        fromDate_JTextField = new JTextField();
-        toDate_JTextField = new JTextField();
+        fromDate_JTextField = new JTextField();//νεο textField
+        toDate_JTextField = new JTextField();//παρομοίως
         
-        final JComponent[] message_JComponents = new JComponent[]
+        final JComponent[] message_JComponents = new JComponent[]//νέος πίνακας JComponent στον οποίο βάζω τα αντικείμεα που φτιάξαμε παραπάνω
         {
             fromDate_JLabel,
             fromDate_JTextField,
@@ -515,32 +515,33 @@ public class Gui extends JFrame
         //.......................................
         
         
-        boolean checkIfNotAnswered=true;
-        SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");
+        boolean checkIfNotAnswered=true;//θέτω boolean
+        SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");//αντικείμενο τύπου SimpleDateFormat το οποίο χρειάζεται για την μετατροπή string
+        //με προκαθορισμένη μορφή σε αντικείμενο τύπου Date και αντίστροφα
         while(checkIfNotAnswered)
-        {
-            int result = JOptionPane.showConfirmDialog(getContentPane(), message_JComponents,"Διάλεξε ημερομηνία",JOptionPane.PLAIN_MESSAGE);
-            
+        {//ώσο είναι αληθές
+            int result = JOptionPane.showConfirmDialog(getContentPane(), message_JComponents,"Διάλεξε ημερομηνία",JOptionPane.PLAIN_MESSAGE);//δείχνει το popup
+            //και περιμένει απάντηση
             try
-            {
+            {//δοκίμασε
                 if(result==JOptionPane.OK_OPTION)
-                {
-                    from_Date = tempDateFormat.parse(fromDate_JTextField.getText());
-                    to_Date = tempDateFormat.parse(toDate_JTextField.getText());
+                {//εάν πάτησε Ok ο χρήστης
+                    from_Date = tempDateFormat.parse(fromDate_JTextField.getText());//πάρε το κείμενο απο το παιδίο και κάντο Date
+                    to_Date = tempDateFormat.parse(toDate_JTextField.getText());//παρομοίως
                     
                     if(!from_Date.after(to_Date))
-                    {
-                        checkIfNotAnswered=false;
+                    {//εάν from_Date<=to_Date
+                        checkIfNotAnswered=false;//θέτω με false ώστε να μην ξαναγίνει το Loop
                     }
                 }
                 else if(result==JOptionPane.CLOSED_OPTION)
-                {
-                    MainMenu(currentName);
-                    return;
+                {//εάν πάτησε X
+                    MainMenu(currentName);//γυρίζει στο αρχικό μενού
+                    return;//επιστρέφει το οποίο τελειώνει αυτή τη συνάρτηση
                 }
             }
             catch (ParseException ex) 
-            {
+            {//εάν υπάρχει προβλήμα στην μετατροπή απλά ξαναγίνεται το loop
                 
             }
             
@@ -549,18 +550,19 @@ public class Gui extends JFrame
         
         
         
-        RentalsAvailabilityForm(from_Date, to_Date);
+        RentalsAvailabilityForm(from_Date, to_Date);//αφού βγεί απο το Loop τότε καλεί την συνάρτηση RentalsAvailabilityForm με ορίσματα τις δύο ημερομηνίες που 
+        //δόθηκαν
     }
     
     public void RentalsAvailabilityForm(Date from_Date,Date to_Date)
-    {
+    {//δείχνει ένα πίνακα με όλα τα ενοικιαζόμενα κια πότε είναι ελεύθερα ανάλογα με τα παραπάνω Dates
         
         
-        JTable mainTable_JTable;
-        List<String> Dates_String;
-        List<ArrayList<String>> listEntrys_String;
-        JButton back_JButton;
-        JScrollPane mainPane_JScrollPane;
+        JTable mainTable_JTable;//ένα νέο JTable
+        List<String> Dates_String;//μια λίστα με string
+        List<ArrayList<String>> listEntrys_String;//νεο αντικειμενο τύπου λιστ που δέχεται αντικείμενα τύπου Arraylist που δέχεται αντικείμενα τύπου string
+        JButton back_JButton;//ένα νεο κουμπί
+        JScrollPane mainPane_JScrollPane;//και ένα JScrollPane
         
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
@@ -570,43 +572,45 @@ public class Gui extends JFrame
         //.......................................
         
         
-        Dates_String = new ArrayList<>();
-        listEntrys_String = new ArrayList<>();
+        Dates_String = new ArrayList<>();//;ένα νέο ArrayList
+        listEntrys_String = new ArrayList<>();//αρχηκοποιώ το αντικείμενο
         
-        back_JButton = NewBackButton();
+        back_JButton = NewBackButton();//δημιουργώ το κουμπί
         
-        SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat tempDateFormat = new SimpleDateFormat("dd/MM/yy");//για μετατροπη απο Date σε string και αντίστροφα
         
         long difference = to_Date.getTime() - from_Date.getTime();//παίρνουμε την διαφορά μεταξύ τους σε milliseconds
         long daysBetween = (difference / (1000*60*60*24));//απο μιλι-δευτερολεπτα τα κάνουμε μέρες
         
                 
         
-        Calendar tempCal = Calendar.getInstance();
-        tempCal.setTime(from_Date);
-        Date tempDate = tempCal.getTime();
+        Calendar tempCal = Calendar.getInstance();//παίρνω το instance του calendar
+        tempCal.setTime(from_Date);//θέτω την ώρα με βάση το from_Date
+        Date tempDate = tempCal.getTime();//θέτω την ημερομηνία με βάση το calendar
         
-        Dates_String.add("Ενοικιαζόμενα");
+        Dates_String.add("Ενοικιαζόμενα");//βάζω ένα νέο αντικείμενο μέσα στη λιστα
         
         
-        boolean ifFirstTry=true;
+        boolean ifFirstTry=true;//θέτω ένα boolean
         
         
         for(Map.Entry<String,Object> mapObject: hotel.hReservations.rentalsList.entrySet())
-        {
-            ArrayList<String> tempReservationCheckList_String = new ArrayList<>();
-            tempCal.setTime(from_Date);
+        {//αφου μετατρέψω σε Map.Entry προσπελνώ τη λίστα
+            ArrayList<String> tempReservationCheckList_String = new ArrayList<>();//νέο αντικείμενο τύπου Arraylist
+            tempCal.setTime(from_Date);//βάζω στο Calendar την σωστή ημερομηνία
             
             for(tempDate=tempCal.getTime();!tempDate.after(to_Date);tempCal.add(Calendar.DATE,1),tempDate=tempCal.getTime())
-            {
+            {//ξεκινόντας απο την ημερομηνία from_Date αυξάνω την τοπική ημερομηνία μέχρι και το to_Date
                 if(tempDate.equals(from_Date))
-                {
+                {//εάν είναι η ίδια μέρα
                     try
-                    {
-                        Method tempMethod = mapObject.getValue().getClass().getMethod("getID", null);
-                        String ID_String = (String) tempMethod.invoke(mapObject.getValue(), null);
-                        tempReservationCheckList_String.add(ID_String);
-                    } catch (NoSuchMethodException ex) {
+                    {//δοκίμασε
+                        Method tempMethod = mapObject.getValue().getClass().getMethod("getID", null);//αποθηκεύω την μέθοδο της αντίστοιχης κλάσεις του αντικειμένου
+                        //mapObject.getValue() ώστε να μπορέσω να έχω πρόσβαση σε αυτή και το αποτέλεσμα της
+                        String ID_String = (String) tempMethod.invoke(mapObject.getValue(), null);//αποθήκευω το αποτέλεσμα της κλήσης της μεθόδου (μέσο reflection)
+                        //το οποίο αν επιτυχές μου επιστρέφει το αποτέλεσμα της συνάρτησης getId η οποία επιστρέφει string
+                        tempReservationCheckList_String.add(ID_String);//προσθέτω αυτό το string στη λίστα
+                    } catch (NoSuchMethodException ex) {//διάφορα exception για να λειτουργεί το reflection απο πάνω
                         Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SecurityException ex) {
                         Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
@@ -619,38 +623,40 @@ public class Gui extends JFrame
                     }
                 }
                 if(ifFirstTry)
-                {
-                    Dates_String.add(tempDateFormat.format(tempDate));
+                {//εάν είναι η πρώτη προσπάθεια
+                    Dates_String.add(tempDateFormat.format(tempDate));//βάζει την ημερομηνία στη λίστα
                 }
                 
                     if(hotel.hReservations.Available(tempDate, tempDate, mapObject.getValue()))
-                    {
-                        tempReservationCheckList_String.add("Ok");
+                    {//εάν το δωμάτιο είναι ελεύθερο
+                        tempReservationCheckList_String.add("Ok");//βάζει στη αντίστοιχη θέση του πίνακα οκ
                     }
                     else
-                    {
-                        tempReservationCheckList_String.add("No"); 
+                    {//αλλιώς
+                        tempReservationCheckList_String.add("No"); //βάζει όχι
                     }
             }
-            ifFirstTry=false;
-            listEntrys_String.add(tempReservationCheckList_String);
+            ifFirstTry=false;//θέτω το firstTry με false
+            listEntrys_String.add(tempReservationCheckList_String);//προσθέτω στη λίστα το arrayList
         }
         
         
-        String[][] tempArrayForValues = new String[listEntrys_String.size()][];
+        String[][] tempArrayForValues = new String[listEntrys_String.size()][];//ένας πίνακας δύο διαστάσεων ο οπίος έχει μήκος το μέγεθος των εγγραφών της λιστασ
+        //και πλατος μη ορισμένο
         for (int i = 0; i < listEntrys_String.size(); i++) 
-        {
-            ArrayList<String> row = listEntrys_String.get(i);
-            tempArrayForValues[i] = row.toArray(new String[row.size()]);
+        {//προσπελνώ όλο τη λίστα
+            ArrayList<String> row = listEntrys_String.get(i);//παίρνω το αντιστοιχο στοιχείο και το βάζω στην αντίστοιχη θέση
+            tempArrayForValues[i] = row.toArray(new String[row.size()]);//μετατρέπω αυτό το ArrayList σε array
         }
         
-        mainTable_JTable = new JTable(tempArrayForValues,Dates_String.toArray());
-        mainTable_JTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        mainTable_JTable = new JTable(tempArrayForValues,Dates_String.toArray());//αρχηκοποιώ το JTable με ορίστατα της τιμές, τον πίνακα ημερομηνιών
+        mainTable_JTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);//κάνω το table να μην κάνει autoresize
         
         
         mainPane_JScrollPane = new JScrollPane(mainTable_JTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.guiPane.add(mainPane_JScrollPane);
-        this.guiPane.add(back_JButton);
+        //κάνω το table να έχει scroll bars
+        this.guiPane.add(mainPane_JScrollPane);//το προσθέτω στο Pane
+        this.guiPane.add(back_JButton);//παρομοίος
         
 
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
@@ -659,7 +665,8 @@ public class Gui extends JFrame
     }
     
     public void AdvancedDatesPopup()
-    {
+    {//ίδιο μενού με το RentalsAvailabilityDatesPopup απλά αλλάζει το που επιστρέφει αν πατηθεί κλείσειμο
+        //και που άν πατηθεί OK
         JLabel fromDate_JLabel,toDate_JLabel;
         JTextField fromDate_JTextField,toDate_JTextField;
         
@@ -719,8 +726,9 @@ public class Gui extends JFrame
     }
     
     public void AdvancedMenu()
-    {
-        JButton getReservations_JButton,showBarChart_JButton,back_JButton;
+    {//Μενού που περιέχει κάποιες λίγο πιο πολύπλοκες διαδικασίες του ξενοδοχείου
+        
+        JButton getReservations_JButton,showBarChart_JButton,back_JButton;//δηλώνω τα κουμπιά
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
         this.guiPane = this.getContentPane();
@@ -728,83 +736,68 @@ public class Gui extends JFrame
         this.guiPane.setLayout(NewReservation_GridLayout);
         //.......................................
         
-        getReservations_JButton = new JButton("Σε αρχείο");
-        getReservations_JButton.addActionListener(
+        getReservations_JButton = new JButton("Σε αρχείο");//νέο JButton μέ όνομα "Σε αρχείο"
+        getReservations_JButton.addActionListener(//βάζω actionListener
             new ActionListener() 
             {
                 public void actionPerformed(ActionEvent e) 
-                {
+                {//κάνω ovewrite την συνάρτηση actionPerformed
                     try(BufferedWriter tempBuffWriter = new BufferedWriter(new FileWriter("./"+"res.txt")))
-                    {
+                    {//δοκιμάζω να ανοίξω (ή δημιουργήσω) το αρχείο res.txt στο οποίο και γράφω τις εγγραφές
                         for(Reservation tempReservation: hotel.Get_Reservations())
-                        {
-                            tempBuffWriter.write(tempReservation.toFile());
-                            tempBuffWriter.newLine();
+                        {//για κάθε κράτηση του ξενοδοχείου
+                            tempBuffWriter.write(tempReservation.toFile());//γράψε το αποτέσεσμα τις toString στο αρχείο
+                            tempBuffWriter.newLine();//άφησε νέα γραμμή
                         }
-                    } catch (IOException ex) {
+                    } catch (IOException ex) {//εάν υπάρξει IOException
                         Logger.getLogger(Gui.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         );
-        showBarChart_JButton = new JButton("Γράφημα");
-        showBarChart_JButton.addActionListener(
+        showBarChart_JButton = new JButton("Γράφημα");//νέο κουμπί με όνομα Γράφημα
+        showBarChart_JButton.addActionListener(//νέος actionListener
             new ActionListener() 
             {
                 public void actionPerformed(ActionEvent e) 
                 {
-                    AdvancedDatesPopup();
+                    AdvancedDatesPopup();//καλώ τη συνάρτηση AdvancedDatesPopup
                     
                 }
             }
         
         );
         
-        back_JButton = NewBackButton();
+        back_JButton = NewBackButton();//δημιουργώ το back Button με βάση την συνάρτηση
         
-        this.guiPane.add(getReservations_JButton);
-        this.guiPane.add(showBarChart_JButton);
-        this.guiPane.add(back_JButton);
+        this.guiPane.add(getReservations_JButton);//βάζω το αντικείμενο στο Pane
+        this.guiPane.add(showBarChart_JButton);//παρομοίως
+        this.guiPane.add(back_JButton);//παρομοίως
+        
         //Κώδικας που χρειάζεται σε κάθε παράθυρο
         this.setContentPane(this.guiPane);
         //.......................................
     }
     
     public void CompletionChartDiagram(Date from_Date,Date to_Date)
-    {
+    {//δείχνει το διαγράμμα πιασμένων δωματίων ανά ημερομηνία
         int values[];
         values = hotel.Get_Fullness_Percentage(from_Date, to_Date).stream().map(i -> (i == null ? 0 : i))
             .mapToInt(Integer::intValue)
-            .toArray();
+            .toArray();//μετατρέπω το αποτέλεσνα της Get_Fullness_Percentage σε stream και έπειτα σε Array
                     
-            String labels[] = {"1","2","3","4","5"};
-            BarChart functionBarChart = new BarChart("Γράφημα", values, labels);
+            String labels[] = {"1","2","3","4","5"};//array απο κάποιες τιμές
+            BarChart functionBarChart = new BarChart("Γράφημα", values, labels);//φτίαχνω ένα νέο Barchart και του δίνω κάποιες τιμές
                     
-            JFrame frame = new JFrame("Histogram");
-            frame.setMinimumSize(new Dimension(400,400));
-            frame.add(functionBarChart);
-            frame.pack();
-            Dimension frameDimension = Toolkit.getDefaultToolkit().getScreenSize();
-            frame.setLocation(frameDimension.width/2-frame.getSize().width/2, frameDimension.height/2-frame.getSize().height/2);
+            JFrame frame = new JFrame("Histogram");//νέο JFrame μέ όνομα Histogram
+            frame.setMinimumSize(new Dimension(400,400));//θέτω το μικρότερο μέγεθος που μπορεί να πάρει το παράθυρο
+            frame.add(functionBarChart);//βάζω στο frame το Barchart
+            frame.pack();//καλώ την pack η οποίο το μικρένει στο σωστό μέγεθος
+            Dimension frameDimension = Toolkit.getDefaultToolkit().getScreenSize();//παίρνω το μέγεθος της τορινής οθόνης
+            frame.setLocation(frameDimension.width/2-frame.getSize().width/2, frameDimension.height/2-frame.getSize().height/2);//και το τοποθετώ στο κέντρο
                     
-            frame.setVisible(true);
+            frame.setVisible(true);//το κάνω visible
     }
-    
-    /* Parakato kodikas gia oles tis methodous
-        //Κώδικας που χρειάζεται σε κάθε παράθυρο
-        this.getContentPane().removeAll();//αφαιρώ τα πάντα απο το Frame
-        this.guiPane = this.getContentPane();
-        GridLayout NewReservation_GridLayout = new GridLayout(3,4);
-        this.guiPane.setLayout(NewReservation_GridLayout);
-        //.......................................
-        
-        
-        //Κώδικας που χρειάζεται σε κάθε παράθυρο
-        this.setContentPane(this.guiPane);
-        //.......................................
-    */
-    
-    
     
     public JButton NewBackButton()
     {//Επιστρέφει ένα κουμπί το οποίο γυρνάει πίσω στο αρχικο μενού
@@ -814,7 +807,7 @@ public class Gui extends JFrame
                 {
                     public void actionPerformed(ActionEvent e)
                     {
-                        MainMenu(currentName);
+                        MainMenu(currentName);//καλήται η main συνάρτηση όταν πατηθεί το κουμπί
                     }
                 }
         );
@@ -822,20 +815,20 @@ public class Gui extends JFrame
     }
     
     static class BarChart extends JPanel
-    {
-        private int[] chartValues;
+    {//νέα κλάση Barchart η οποία κάνει extend to JPanel
+        private int[] chartValues;//διάφορες μεταβλητές
         private String[] chartLabels;
         private String chartTitle;
         
         public BarChart(String title,int[] values,String[]labels)
-        {
-            this.chartTitle = title;
-            this.chartValues = values;
-            this.chartLabels = labels;
+        {//constructor της BarChart το οποίο δέχεται τρία ορίσμα
+            this.chartTitle = title;//αποθηκέυει τα ορίσμα
+            this.chartValues = values;//παρομοίως
+            this.chartLabels = labels;//παρομοίως
         }
         
         public void paintComponent(Graphics g)
-        {
+        {//κάνω overide την συνάρτηση PaintComponent 
             super.paintComponent(g);//Καλεί την υπερκλάση και περνά το g σάν παράμετρο
             
             Random r = new Random();//Δημιουργεί ένα αντικείμενο τύπου Random
@@ -846,76 +839,78 @@ public class Gui extends JFrame
                 return;
             }
             
-            Dimension chartDimension = this.getSize();
-            int panelWidth = chartDimension.width;
-            int panelHeight = chartDimension.height;
-            int barWidth = panelWidth / this.chartValues.length;
-            int maxValue = 0;
+            Dimension chartDimension = this.getSize();//παίρνω το μέγεθος του panel
+            int panelWidth = chartDimension.width;//αποθηκέω σε μεταβλητή το πλάτος
+            int panelHeight = chartDimension.height;//και το ύψος
+            int barWidth = panelWidth / this.chartValues.length;//βρήσκω το μήκος κάθε μπάρας
+            int maxValue = 0;//θέτω δύο τιμές  =0
             int minValue = 0;
             for(int tempValue:this.chartValues)
-            {
+            {//προσπελώ τον πίνακα και βρήσκω την μιρκότερη και μεγαλύτερη αντίστοιχα
                 maxValue = Math.max(maxValue, tempValue);
                 minValue = Math.min(minValue, tempValue);
             }
             
-            Font titleFont = new Font("Book Antiqua", Font.BOLD, 15);
-            FontMetrics titleFontMetrics  = g.getFontMetrics(titleFont);
+            Font titleFont = new Font("Book Antiqua", Font.BOLD, 15);//θέτω ένα font για τον τίτλο
+            FontMetrics titleFontMetrics  = g.getFontMetrics(titleFont);//και φτίαχνω ένα αντικείμενο τύπου FontMetrics με βάση το font απο πάνω
             
-            Font labelFont = new Font("Book Antiqua", Font.PLAIN, 14);
-            FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);
+            Font labelFont = new Font("Book Antiqua", Font.PLAIN, 14);//παρομοίος για την ετοικέτα κάτω
+            FontMetrics labelFontMetrics = g.getFontMetrics(labelFont);//παρομοίως
             
-            int titleWidth = titleFontMetrics.stringWidth(this.chartTitle);
-            int stringHeight = titleFontMetrics.getAscent();
-            int stringWidth = (panelWidth - titleWidth) / 2;
-            g.setFont(titleFont);
-            g.drawString(this.chartTitle, stringWidth, stringHeight);
+            int titleWidth = titleFontMetrics.stringWidth(this.chartTitle);//βρήσκω το μήκος του τίτλου
+            int stringHeight = titleFontMetrics.getAscent();//βρήσκω το ύψος του τίτλου
+            int stringWidth = (panelWidth - titleWidth) / 2;//βρήσκω την τοποθεσία του τίτλου
+            g.setFont(titleFont);//θέτω το font
+            g.drawString(this.chartTitle, stringWidth, stringHeight);//και το ζωγραφίζω στο Panel
             
-            int top = titleFontMetrics.getHeight();
-            int bottom = labelFontMetrics.getHeight();
+            int top = titleFontMetrics.getHeight();//βρήσκω το ύψος του τιτλου
+            int bottom = labelFontMetrics.getHeight();//και το ύψους του label κάτω
             
             
             
             if(maxValue==minValue)
-            {
+            {//εάν η μέγιστη τιμή ισούτε με την ελάχιστη σταμάτα
                 return;
             }
-            double barScale = (panelHeight - top - bottom)/(double)(maxValue - minValue);
+            double barScale = (panelHeight - top - bottom)/(double)(maxValue - minValue);//βρήσκω το scale με το οποίο μεγενθήνω η μικρένω της μπάρες για
+            //να χωράνε στην οθόνη
             
            
             
-            stringHeight = panelHeight - labelFontMetrics.getDescent();
+            stringHeight = panelHeight - labelFontMetrics.getDescent();//βρήσκω την τοποθεσία του label
             
             
             
-            g.setFont(labelFont);
+            g.setFont(labelFont);//θέτω το font
             for(int i=0; i<this.chartValues.length;i++)
-            {
-                int xPos = barWidth*i + 1;
-                int tempValue = this.chartValues[i];
-                int barHeight = (int) (tempValue * barScale);
-                int yPos = top;
+            {//προσπελνώ όλες της εγγραφές
+                int xPos = barWidth*i + 1;//υπολογίζει το x
+                int tempValue = this.chartValues[i];//παίρνω και αποθηκεύω την τιμή του πίνακα σε μία τοπική μεταβλητή
+                int barHeight = (int) (tempValue * barScale);//βρήσκω το ύψος της μπάρας με βάση την τίμή της και το Scale
+                int yPos = top;//θέτω το ύψος που θα το τοποθετηθεί η μπαρα
                 
                 if(tempValue>=0)
-                {
-                    yPos += (int) ((maxValue - tempValue)* barScale);
+                {//εάν είνα θετική η τιμή
+                    yPos += (int) ((maxValue - tempValue)* barScale);//προσθέτω στο y τη διαφορά maxValue - tempValue γινόμενο του Barscale
+                    //το οποίο την τοποθετεί και αντίστοιχα ώστε  να είνα όλες σε μια γραμμή το κάτω μέρος τους
                 }
                 else
-                {
-                    yPos += (int) (maxValue * barScale);
-                    barHeight = - barHeight;
+                {//αλλιώς αν είναι αρνητική τιμή
+                    yPos += (int) (maxValue * barScale);//προσθέτω την μέγιστη τιμή * της scale
+                    barHeight = - barHeight;//και αλλάζω το ύωος
                 }
                 
-                g.setColor(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));
+                g.setColor(new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255)));//διαλέγω ένα τυχαίο χρώμα
                 
-                g.fillRect(xPos, yPos, barWidth-2, barHeight);
-                g.setColor(Color.BLUE);
-                g.drawRect(xPos, yPos, barWidth-2, barHeight);
+                g.fillRect(xPos, yPos, barWidth-2, barHeight);//φτίαχνω την μπάρα με τα παραπάνω στοιχεια (θεση χ, θέση y, μήκος , πλατος)
+                g.setColor(Color.BLUE);//θέτω το χρώμμα του περιγράμματος
+                g.drawRect(xPos, yPos, barWidth-2, barHeight);//ζωγραφίζω και ένα περίγραμμα
                 
                 
             }
             
             
-            g.drawString("Xronos", stringWidth,stringHeight);
+            g.drawString("Xronos", stringWidth,stringHeight);//θέτω και το κάτω label
             
             
             

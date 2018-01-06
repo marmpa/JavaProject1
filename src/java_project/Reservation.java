@@ -160,7 +160,7 @@ public class Reservation
     }
     
     public Object GetRented()
-    {
+    {//επιστρέφει το αντικείμενο rented
         return this.rented;
     }
     
@@ -219,11 +219,11 @@ public class Reservation
             Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return ID_String;
+        return ID_String;//επιστρέφει το ID
     }
     
     public String toString(boolean noNeed)
-    {
+    {//κλάση που επιστρέφει string ειδικά για το jlabel
         String tempString;
         try
         {
@@ -232,7 +232,7 @@ public class Reservation
                     +"<br/>Όνομα κατόχου κράτησης: "+this.reservation_Name
                     +"<br/>Einai apo tis "+dateFormat.format(this.start_date)
                     +" mexri tis "+dateFormat.format(this.finish_date)
-                    +"</html>";
+                    +"</html>";//φτιάχνω ένα string το οποίο περιέχει <html> και <br> tags για να μπορώ να το δείχνω σωστά στο JLabel
         }
         catch(Exception e)
         {
@@ -242,7 +242,7 @@ public class Reservation
     }
     
     public String toFile()
-    {
+    {//επιστρέφει για αρχείο τις πληροφορίες της κράτησης
         String tempString;
         try
         {
@@ -252,12 +252,12 @@ public class Reservation
                 + this.dateFormat.format(this.start_date)+", "
                 + this.dateFormat.format(this.finish_date)+", "
                 + typeNamingScheme.get(this.rented.getClass().getSimpleName())
-                +" "+ this.GetObjectId(this.rented);
+                +" "+ this.GetObjectId(this.rented);//και θέτω το string
         }
         catch(Exception e)
         {
             tempString="none";
         }
-        return tempString;
+        return tempString;//επιστρέφω το string
     }
 }
