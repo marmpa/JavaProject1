@@ -50,7 +50,7 @@ public class Gui extends JFrame
     
     
     public void LoginMenu()
-    {
+    {   
         JLabel login_JLabel1,login_JLabel2;//Δηλώνω δύο labels
         JTextField login_JTextField;//Και ένα Textfiled για να μπορώ να γράψω
         String login_JLabel1Text = "Kalosirthate gia sas gia sas gia sas gia sas gias sas";//κείμενο
